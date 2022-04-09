@@ -3,6 +3,6 @@ module com.aetherwars.aetherwars {
     requires javafx.fxml;
 
 
-    opens com.aetherwars.aetherwars to javafx.fxml;
-    exports com.aetherwars.aetherwars;
+    opens com.aetherwars to javafx.fxml;
+    exports com.aetherwars;
 }

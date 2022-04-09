@@ -24,8 +24,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'com.aetherwars.aetherwars'
-    mainClass = 'com.aetherwars.aetherwars.HelloApplication'
+    mainModule = 'com.aetherwars'
+    mainClass = 'com.aetherwars.AetherWars'
 }
 
 javafx {

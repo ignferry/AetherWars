@@ -1,4 +1,4 @@
-package com.aetherwars.aetherwars;
+package com.aetherwars;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
