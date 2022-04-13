@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
@@ -30,7 +31,7 @@ public class AetherWars extends Application {
   }
 
   @Override
-  public void start(Stage stage) {
+  public void start(Stage stage) throws IOException {
     Text text = new Text();
     text.setText("Loading...");
     text.setX(50);
@@ -39,7 +40,8 @@ public class AetherWars extends Application {
     Group root = new Group();
     root.getChildren().add(text);
 
-    Scene scene = new Scene(root, 1280, 720);
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/game.fxml"));
+    Scene scene = new Scene(fxmlLoader.load());
 
     stage.setTitle("Minecraft: Aether Wars");
     stage.setScene(scene);
