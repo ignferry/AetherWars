@@ -1,4 +1,4 @@
-package card;
+package com.aetherwars.card;
 
 abstract class Card {
     protected String name;
