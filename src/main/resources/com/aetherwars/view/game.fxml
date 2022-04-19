@@ -1,370 +1,537 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.GameController">
    <children>
-      <HBox prefHeight="110.0" prefWidth="1366.0">
+      <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../gameImages/field-background.png" />
+         </image>
+      </ImageView>
+      <FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0">
          <children>
-            <VBox prefHeight="110.0" prefWidth="633.0">
-               <padding>
-                  <Insets left="20.0" right="20.0" top="20.0" />
-               </padding>
+            <HBox prefHeight="110.0" prefWidth="1366.0">
                <children>
-                  <Label text="Player 1">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin></Label>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="200.0">
+                  <VBox prefHeight="110.0" prefWidth="633.0">
+                     <padding>
+                        <Insets left="20.0" right="20.0" top="20.0" />
+                     </padding>
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="40.0" stroke="BLACK" strokeType="INSIDE" width="570.0" StackPane.alignment="TOP_LEFT">
-                           <StackPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </StackPane.margin>
-                        </Rectangle>
-                        <VBox prefHeight="40.0" prefWidth="600.0" StackPane.alignment="TOP_LEFT">
+                        <Label fx:id="player1NameLabel" styleClass="text" text="Player 1" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="30.0" stroke="BLACK" strokeType="INSIDE" width="560.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" height="40.0" stroke="BLACK" strokeType="INSIDE" width="570.0" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </StackPane.margin>
                               </Rectangle>
+                              <VBox prefHeight="40.0" prefWidth="600.0" StackPane.alignment="TOP_LEFT">
+                                 <children>
+                                    <Rectangle fx:id="player1LifeBar" arcHeight="5.0" arcWidth="5.0" fill="RED" height="30.0" stroke="BLACK" strokeType="INSIDE" width="560.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Rectangle>
+                                 </children>
+                                 <StackPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </StackPane.margin>
+                              </VBox>
+                              <Label fx:id="player1LifeLabel" styleClass="text" text="80 / 80" textFill="WHITE" StackPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Arial Bold" size="18.0" />
+                                 </font>
+                              </Label>
                            </children>
-                           <StackPane.margin>
-                              <Insets left="10.0" right="10.0" top="10.0" />
-                           </StackPane.margin>
-                        </VBox>
-                        <Label text="80 / 80" textFill="WHITE" StackPane.alignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="18.0" />
-                           </font>
-                        </Label>
+                        </StackPane>
                      </children>
-                  </StackPane>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="110.0" prefWidth="100.0">
-               <children>
-                  <Label text="Turn">
-                     <font>
-                        <Font name="Arial" size="36.0" />
-                     </font>
-                  </Label>
-                  <Label text="1">
-                     <font>
-                        <Font name="Arial" size="36.0" />
-                     </font>
-                  </Label>
-               </children></VBox>
-            <VBox alignment="TOP_RIGHT" prefHeight="110.0" prefWidth="633.0">
-               <padding>
-                  <Insets left="20.0" right="20.0" top="20.0" />
-               </padding>
-               <children>
-                  <Label text="Player 2">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <StackPane prefHeight="80.0" prefWidth="200.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="40.0" stroke="BLACK" strokeType="INSIDE" width="570.0">
-                           <StackPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </StackPane.margin>
-                        </Rectangle>
-                        <VBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="600.0" StackPane.alignment="TOP_RIGHT">
-                           <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="30.0" stroke="BLACK" strokeType="INSIDE" width="560.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Rectangle>
-                           </children>
-                           <StackPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </StackPane.margin>
-                        </VBox>
-                        <Label text="80 / 80" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <HBox prefHeight="400.0" prefWidth="1366.0">
-         <children>
-            <AnchorPane prefHeight="400.0" prefWidth="600.0">
-               <children>
-                  <StackPane layoutX="20.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="170.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="170.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="320.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="320.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="470.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="270.0" layoutY="-68.0" prefHeight="150.0" prefWidth="200.0" />
-               </children>
-            </AnchorPane>
-            <FlowPane prefHeight="400.0" prefWidth="166.0" />
-            <AnchorPane prefHeight="400.0" prefWidth="600.0">
-               <children>
-                  <StackPane layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="150.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="150.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="300.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="300.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="450.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0" />
-                     </children>
-                  </StackPane>
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
-      <StackPane prefHeight="50.0" prefWidth="1366.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#533217" height="50.0" stroke="BLACK" strokeType="INSIDE" width="1366.0" />
-            <HBox prefHeight="50.0" prefWidth="1366.0">
-               <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#695a4b" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
-                           <StackPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </StackPane.margin>
-                        </Rectangle>
-                        <Label text="DRAW" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#695a4b" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
-                           <StackPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </StackPane.margin>
-                        </Rectangle>
-                        <Label text="PLAN" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#695a4b" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
-                           <StackPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </StackPane.margin>
-                        </Rectangle>
-                        <Label text="ATTACK" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#695a4b" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
-                           <StackPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </StackPane.margin>
-                        </Rectangle>
-                        <Label text="END" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="&gt;&gt;">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="63.0" right="63.0" top="5.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-                  <Label text="Label" />
-               </children>
-            </HBox>
-         </children>
-      </StackPane>
-      <HBox prefHeight="208.0" prefWidth="1366.0">
-         <children>
-            <GridPane alignment="CENTER" gridLinesVisible="true" prefHeight="188.0" prefWidth="600.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <HBox prefHeight="188.0" prefWidth="500.0">
-               <children>
-                  <ImageView fitHeight="208.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets />
-                     </HBox.margin></ImageView>
-                  <AnchorPane prefHeight="188.0" prefWidth="120.0">
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="110.0" prefWidth="100.0">
                      <children>
-                        <Label layoutX="40.0" layoutY="30.0" text="0">
+                        <Label styleClass="text" text="Turn" textFill="WHITE">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Arial" size="36.0" />
                            </font>
                         </Label>
-                        <Label layoutX="40.0" layoutY="60.0" text="0">
+                        <Label fx:id="turnLabel" styleClass="text" text="1" textFill="WHITE">
                            <font>
-                              <Font name="Arial" size="18.0" />
+                              <Font name="Arial" size="36.0" />
                            </font>
                         </Label>
-                        <Label layoutX="40.0" layoutY="90.0" text="0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="40.0" layoutY="120.0" text="0 / 1">
-                           <font>
-                              <Font name="Arial" size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="30.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="60.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="90.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="120.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="150.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" x="40.0" y="150.0" />
                      </children>
+                  </VBox>
+                  <VBox alignment="TOP_RIGHT" prefHeight="110.0" prefWidth="633.0">
                      <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="20.0" right="20.0" top="20.0" />
                      </padding>
-                  </AnchorPane>
-                  <TextArea prefHeight="188.0" prefWidth="200.0" />
+                     <children>
+                        <Label fx:id="player2NameLabel" styleClass="text" text="Player 2" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <StackPane prefHeight="80.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" height="40.0" stroke="BLACK" strokeType="INSIDE" width="570.0">
+                                 <StackPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <VBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="600.0" StackPane.alignment="TOP_RIGHT">
+                                 <children>
+                                    <Rectangle fx:id="player2LifeBar" arcHeight="5.0" arcWidth="5.0" fill="RED" height="30.0" stroke="BLACK" strokeType="INSIDE" width="560.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Rectangle>
+                                 </children>
+                                 <StackPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </StackPane.margin>
+                              </VBox>
+                              <Label fx:id="player2LifeLabel" styleClass="text" text="80 / 80" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="188.0" prefWidth="100.0">
+            <HBox prefHeight="400.0" prefWidth="1366.0">
                <children>
-                  <StackPane prefHeight="120.0" prefWidth="40.0">
+                  <AnchorPane fx:id="player1FieldPane" prefHeight="400.0" prefWidth="600.0">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#66523c" height="120.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="110.0" stroke="BLACK" strokeType="INSIDE" width="30.0" StackPane.alignment="BOTTOM_CENTER">
-                           <StackPane.margin>
-                              <Insets bottom="5.0" />
-                           </StackPane.margin></Rectangle>
+                        <StackPane fx:id="player1Pane" layoutX="20.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="A1" layoutX="170.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="B1" layoutX="320.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="C1" layoutX="170.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="D1" layoutX="320.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="E1" layoutX="470.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </StackPane>
-                  <Label text="1 / 1" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="MANA" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  </AnchorPane>
+                  <FlowPane prefHeight="400.0" prefWidth="166.0" />
+                  <AnchorPane fx:id="player2FieldPane" prefHeight="400.0" prefWidth="600.0">
+                     <children>
+                        <StackPane fx:id="E2" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="B2" layoutX="150.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="D2" layoutX="150.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="A2" layoutX="300.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="C2" layoutX="300.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="player2Pane" layoutX="450.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
                </children>
-               <HBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </HBox.margin>
-            </VBox>
-            <StackPane prefHeight="188.0" prefWidth="158.0">
+            </HBox>
+            <StackPane prefHeight="50.0" prefWidth="1366.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="100.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="100.0">
-                     <effect>
-                        <DropShadow offsetX="5.0" offsetY="5.0">
-                           <color>
-                              <Color red="0.43157893419265747" green="0.421988308429718" blue="0.421988308429718" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                  </Rectangle>
-                  <Label text="0" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="1366.0" />
+                  <HBox prefHeight="50.0" prefWidth="1366.0" style="-fx-background-color: #c6c6c6;">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle fx:id="drawRectangle" arcHeight="5.0" arcWidth="5.0" fill="#555555" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
+                                 <StackPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Label styleClass="text" text="DRAW" textFill="WHITE">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle fx:id="planRectangle" arcHeight="5.0" arcWidth="5.0" fill="#555555" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
+                                 <StackPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Label styleClass="text" text="PLAN" textFill="WHITE">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle fx:id="attackRectangle" arcHeight="5.0" arcWidth="5.0" fill="#555555" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
+                                 <StackPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Label styleClass="text" text="ATTACK" textFill="WHITE">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle fx:id="endRectangle" arcHeight="5.0" arcWidth="5.0" fill="#555555" height="40.0" stroke="BLACK" strokeType="INSIDE" width="275.0">
+                                 <StackPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Label styleClass="text" text="END" textFill="WHITE">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <Button fx:id="nextPhaseButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #555555; -fx-font-size: 24;" styleClass="text" text="&gt;&gt;" textAlignment="CENTER" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="63.0" right="63.0" top="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </StackPane>
+            <HBox prefHeight="208.0" prefWidth="1366.0" style="-fx-background-color: #c6c6c6;">
+               <children>
+                  <GridPane fx:id="handGrid" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="600.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="180.0" stroke="BLACK" strokeType="INSIDE" width="116.0">
+                           <effect>
+                              <InnerShadow offsetX="2.0" offsetY="2.0" />
+                           </effect>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="180.0" stroke="BLACK" strokeType="INSIDE" width="116.0" GridPane.columnIndex="1">
+                           <effect>
+                              <InnerShadow offsetX="2.0" offsetY="2.0" />
+                           </effect>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="180.0" stroke="BLACK" strokeType="INSIDE" width="116.0" GridPane.columnIndex="2">
+                           <effect>
+                              <InnerShadow offsetX="2.0" offsetY="2.0" />
+                           </effect>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="180.0" stroke="BLACK" strokeType="INSIDE" width="116.0" GridPane.columnIndex="3">
+                           <effect>
+                              <InnerShadow offsetX="2.0" offsetY="2.0" />
+                           </effect>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="180.0" stroke="BLACK" strokeType="INSIDE" width="116.0" GridPane.columnIndex="4">
+                           <effect>
+                              <InnerShadow offsetX="2.0" offsetY="2.0" />
+                           </effect>
+                        </Rectangle>
+                     </children>
+                  </GridPane>
+                  <HBox fx:id="cardInfoBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="500.0">
+                     <children>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="188.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#212121" height="188.0" stroke="BLACK" strokeType="INSIDE" style="-fx-stroke: #c6c6c6;" width="188.0" />
+                              <ImageView fx:id="cardImageView1" fitHeight="188.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </ImageView>
+                              <HBox fx:id="levelExpBox1" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: #c6c6c6;">
+                                 <StackPane.margin>
+                                    <Insets top="158.0" />
+                                 </StackPane.margin>
+                                 <children>
+                                    <Label fx:id="levelLabel1" alignment="CENTER" prefWidth="40.0" styleClass="text" text="10" textFill="#80ff00">
+                                       <font>
+                                          <Font name="Arial" size="18.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow height="2.0" radius="0.5" spread="1.0" width="2.0" />
+                                       </effect>
+                                       <padding>
+                                          <Insets right="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <GridPane gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="150.0" fx:id="xpGrid1">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </StackPane>
+                        <VBox alignment="TOP_CENTER" prefHeight="188.0" prefWidth="112.0">
+                           <children>
+                              <GridPane fx:id="cardInfoGrid1" prefHeight="118.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <ImageView fx:id="typeImageView1" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" top="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <StackPane prefHeight="188.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="188.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+                                 <effect>
+                                    <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                 </effect>
+                              </Rectangle>
+                              <ScrollPane hbarPolicy="NEVER">
+                                 <content>
+                                    <TextFlow fx:id="cardDescriptionTextFlow1" prefHeight="188.0" prefWidth="200.0" style="-fx-background-color: #8b8b8b;" styleClass="text">
+                                       <effect>
+                                          <InnerShadow offsetX="2.0" offsetY="2.0" />
+                                       </effect>
+                                    </TextFlow>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </HBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="188.0" prefWidth="100.0">
+                     <children>
+                        <GridPane fx:id="manaGrid" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="30.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <Label styleClass="text" text="MANA" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <StackPane prefHeight="188.0" prefWidth="158.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="160.0" stroke="BLACK" strokeType="INSIDE" width="110.0">
+                           <effect>
+                              <InnerShadow offsetX="2.0" offsetY="2.0" />
+                           </effect>
+                        </Rectangle>
+                        <ImageView fx:id="deckImageView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <effect>
+                              <DropShadow offsetX="5.0" offsetY="5.0" />
+                           </effect>
+                           <image>
+                              <Image url="@../gameImages/card-back.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="numOfCardsLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="99" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Black" size="18.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0">
+                                 <color>
+                                    <Color red="0.06315789371728897" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
          </children>
-      </HBox>
+      </FlowPane>
    </children>
-</FlowPane>
+</StackPane>

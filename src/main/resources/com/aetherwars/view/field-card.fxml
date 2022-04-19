@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-
-<StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.FieldCardController">
    <children>
-      <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="cardImageView" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
       <HBox prefHeight="30.0" prefWidth="130.0">
          <children>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="typeImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -27,8 +25,11 @@
       </HBox>
       <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="130.0">
          <children>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-            <Label alignment="CENTER" prefHeight="20.0" text="99" textFill="WHITE">
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../gameImages/atk-icon.png" />
+               </image></ImageView>
+            <Label fx:id="atkLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="99" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="14.0" />
                </font>
@@ -44,8 +45,11 @@
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@../gameImages/hp-icon.png" />
+               </image>
             </ImageView>
-            <Label alignment="CENTER" prefHeight="20.0" text="99" textFill="WHITE">
+            <Label fx:id="HPLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="99" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="14.0" />
                </font>
@@ -67,7 +71,7 @@
             <Insets left="5.0" right="5.0" top="100.0" />
          </StackPane.margin>
          <children>
-            <Label alignment="CENTER" prefHeight="20.0" text="Lv.10" textFill="WHITE">
+            <Label fx:id="levelLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="Lv.10" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="14.0" />
                </font>
@@ -83,7 +87,7 @@
       </HBox>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label alignment="CENTER" prefHeight="20.0" text="9/10" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="expLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="9/10" textAlignment="RIGHT" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="14.0" />
                </font>
