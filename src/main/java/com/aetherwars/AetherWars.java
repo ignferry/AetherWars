@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -40,8 +41,10 @@ public class AetherWars extends Application {
     Group root = new Group();
     root.getChildren().add(text);
 
+    Font.loadFont(getClass().getResourceAsStream("Minecraft.ttf"),14);
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/game.fxml"));
     Scene scene = new Scene(fxmlLoader.load());
+    scene.getStylesheets().add(getClass().getResource("game-style.css").toExternalForm());
 
     stage.setTitle("Minecraft: Aether Wars");
     stage.setScene(scene);
