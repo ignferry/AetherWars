@@ -32,9 +32,20 @@ public class CardList {
         characterReader.setSkipHeader(true);
         List<String[]> characterRows = characterReader.read();
         for (String[] row : characterRows) {
-            CharacterCard newCharacter = new CharacterCard()
-            Character c = new Character(row[1], row[3], Type.valueOf(row[2]));
-            System.out.println(c);
+            int id = Integer.parseInt(row[0]);
+            String name = row[1];
+            CharacterType type = CharacterType.valueOf(row[2]);
+            String desc = row[3];
+            String imagePath = row[4];
+            int attack = Integer.parseInt(row[5]);
+            int health = Integer.parseInt(row[6]);
+            int mana = Integer.parseInt(row[7]);
+            int attackup = Integer.parseInt(row[8]);
+            int healthup = Integer.parseInt(row[9]);
+
+            CharacterCard newCharacterCard = new CharacterCard(id, name, desc, imagePath, attack, health, mana, attackup, healthup,
+                    1, 0, type);
+            System.out.println(newCharacterCard.getName());
         }
     }
 

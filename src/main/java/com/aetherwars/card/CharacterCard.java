@@ -4,6 +4,7 @@ package com.aetherwars.card;
 public class CharacterCard extends Card {
     private int baseAttack;
     private int baseHp;
+    private int mana;
     private int attackUp;
     private int healthUp;
     private int level;
@@ -11,11 +12,12 @@ public class CharacterCard extends Card {
     private CharacterType type;
     // PrivateKey List<SpellCard> usedSpell; belum ada kelas spellcard
 
-    public CharacterCard(String name, String desc, String imagePath, int baseAtk, int baseHp, int atkUp, int healthUp,
+    public CharacterCard(int id, String name, String desc, String imagePath, int baseAtk, int baseHp, int mana, int atkUp, int healthUp,
                          int level, int exp, CharacterType type) {
-        super(name, desc, imagePath);
-        this.baseAttack = atkUp;
+        super(id, name, desc, imagePath);
+        this.baseAttack = baseAtk;
         this.baseHp = baseHp;
+        this.mana = mana;
         this.attackUp = atkUp;
         this.healthUp = healthUp;
         this.level = level;
@@ -91,8 +93,8 @@ public class CharacterCard extends Card {
     }
 
     public static void main(String[] args) {
-        CharacterCard card = new CharacterCard("Agumon", "Ini sebenernya digimon", "google.com", 10, 100, 4, 10, 1, 6,
-                CharacterType.END);
+        CharacterCard card = new CharacterCard(1,"Agumon", "Ini sebenernya digimon", "google.com", 10, 100, 4, 10, 10, 1,
+                6, CharacterType.END);
         card.cardInfo();
     }
 }
