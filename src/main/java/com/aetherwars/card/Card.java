@@ -5,13 +5,19 @@ abstract public class Card {
     protected String name;
     protected String description;
     protected String imagePath;
+    protected int manaNeeded;
 
     abstract Card clone(Card c);
 
-    Card(int id, String name, String description, String imagePath) {
+    Card(int id, String name, String description, String imagePath, int manaNeeded) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imagePath = imagePath;
+        this.manaNeeded = manaNeeded;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

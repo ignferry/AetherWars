@@ -14,10 +14,9 @@ public class CharacterCard extends Card {
 
     public CharacterCard(int id, String name, String desc, String imagePath, int baseAtk, int baseHp, int mana, int atkUp, int healthUp,
                          int level, int exp, CharacterType type) {
-        super(id, name, desc, imagePath);
+        super(id, name, desc, imagePath, mana);
         this.baseAttack = baseAtk;
         this.baseHp = baseHp;
-        this.mana = mana;
         this.attackUp = atkUp;
         this.healthUp = healthUp;
         this.level = level;

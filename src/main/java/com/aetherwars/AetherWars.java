@@ -22,6 +22,9 @@ import com.aetherwars.util.CSVReader;
 public class AetherWars extends Application {
 
   private static final String CHARACTER_CSV_FILE_PATH = "card/data/character.csv";
+  private static final String MORPH_SPELL_CSV_FILE_PATH = "card/data/spell_morph.csv";
+  private static final String POTION_SPELL_CSV_FILE_PATH = "card/data/spell_ptn.csv";
+  private static final String SWAP_SPELL_CSV_FILE_PATH = "card/data/spell_swap.csv";
 
   @Override
   public void start(Stage stage) throws IOException {
@@ -44,8 +47,12 @@ public class AetherWars extends Application {
 
     try {
       File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
+      File morphCSVFile = new File(getClass().getResource(MORPH_SPELL_CSV_FILE_PATH).toURI());
+      File ptnCSVFile = new File(getClass().getResource(POTION_SPELL_CSV_FILE_PATH).toURI());
+      File swapCSVFile = new File(getClass().getResource(SWAP_SPELL_CSV_FILE_PATH).toURI());
+
       CardList cards = new CardList();
-      cards.loadCards(characterCSVFile);
+      cards.loadCards(characterCSVFile, morphCSVFile, ptnCSVFile, swapCSVFile);
       text.setText("Minecraft: Aether Wars!");
     } catch (Exception e) {
       text.setText("Failed to load cards: " + e);
