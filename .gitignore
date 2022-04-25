@@ -6,3 +6,4 @@ build
 .gradle/7.3.3/
 .gradle/7.3.3/executionHistory/executionHistory.lock
 *.lock
+bin
