@@ -78,7 +78,7 @@ public class CardList {
             int attackup = Integer.parseInt(row[8]);
             int healthup = Integer.parseInt(row[9]);
 
-            CharacterCard newCharacterCard = new CharacterCard(id, name, desc, imagePath, attack, health, mana, attackup, healthup,
+            CharacterCard newCharacterCard = new CharacterCard(id, name, desc, imagePath, attack, health, attackup, healthup,
                     1, 0, type);
             this.characterCards.add(newCharacterCard);
         }

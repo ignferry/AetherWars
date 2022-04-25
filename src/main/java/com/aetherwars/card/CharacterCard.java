@@ -2,12 +2,12 @@ package com.aetherwars.card;
 
 
 import java.util.List;
+
 import java.util.ArrayList;
 
 public class CharacterCard extends Card {
     private int baseAttack;
     private int baseHp;
-    private int mana;
     private int attackUp;
     private int healthUp;
     private int level;
@@ -15,9 +15,10 @@ public class CharacterCard extends Card {
     private CharacterType type;
     private List<SpellCard> usedSpell;
 
-    public CharacterCard(int id, String name, String desc, String imagePath, int baseAtk, int baseHp, int mana, int atkUp, int healthUp,
+    public CharacterCard(int id, String name, String desc, String imagePath, int baseAtk, int baseHp,
+                         int atkUp, int healthUp,
                          int level, int exp, CharacterType type) {
-        super(id, name, desc, imagePath, mana);
+        super(id, name, desc, imagePath);
         this.baseAttack = baseAtk;
         this.baseHp = baseHp;
         this.attackUp = atkUp;
@@ -56,12 +57,22 @@ public class CharacterCard extends Card {
         return this.exp;
     }
 
-    public void inflictSpellEffects() {
-
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
-    public void addSpell() {
+    public void inflictSpellEffects() {
+        for (int i = 0; i < this.usedSpell.size(); i++) {
+            this.usedSpell.get(i).useSpell(this);
+            this.usedSpell.get(i).setDuration(this.usedSpell.get(i).getDuration() - 1);
+            if (this.usedSpell.get(i).getDuration() == 0) {
+                this.usedSpell.remove(i);
+            }
+        }
+    }
 
+    public void addSpell(SpellCard sc) {
+        this.usedSpell.add(sc);
     }
 
     public Boolean isExpMax() {
@@ -103,9 +114,7 @@ public class CharacterCard extends Card {
         this.name = other.name;
         this.description = other.description;
         this.imagePath = other.imagePath;
-        this.manaNeeded = other.manaNeeded;
         this.changeAtkHp(other.baseAttack, other.baseHp);
-        this.mana = other.mana;
         this.attackUp = other.attackUp;
         this.healthUp = other.healthUp;
         this.level = 1;
@@ -128,8 +137,13 @@ public class CharacterCard extends Card {
     }
 
     public static void main(String[] args) {
-        CharacterCard card = new CharacterCard(1,"Agumon", "Ini sebenernya digimon", "google.com", 10, 100, 4, 10, 10, 1,
-                6, CharacterType.END);
+        CharacterCard card = new CharacterCard(1, "Agumon", "Ini sebenernya digimon", "google.com", 10, 100, 4, 10, 1,
+                0,
+                CharacterType.END);
+        SpellCard sc = new LevelSpellCard(2, "AS", "ASAS", "google.com", 2, 3);
+        card.addSpell(sc);
+        card.inflictSpellEffects();
         card.cardInfo();
     }
 }
+
