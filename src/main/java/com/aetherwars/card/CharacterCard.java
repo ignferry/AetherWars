@@ -57,6 +57,10 @@ public class CharacterCard extends Card {
         return this.exp;
     }
 
+    public CharacterType getType(){
+        return this.type;
+    }
+
     public void setExp(int exp) {
         this.exp = exp;
     }
