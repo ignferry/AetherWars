@@ -1,13 +1,11 @@
 package com.aetherwars.card;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-
 public class CharacterCard extends Card {
-    private int baseAttack;
-    private int baseHp;
+    private double baseAttack;
+    private double baseHp;
     private int attackUp;
     private int healthUp;
     private int level;
@@ -16,8 +14,8 @@ public class CharacterCard extends Card {
     private List<SwapSpellCard> usedSwap;
     private List<PotionSpellCard> usedPotion;
 
-    public CharacterCard(int id, String name, String desc, String imagePath, int manaNeeded, int baseAtk, int baseHp,
-                          int atkUp, int healthUp,
+    public CharacterCard(int id, String name, String desc, String imagePath, int manaNeeded, double baseAtk, double baseHp,
+                         int atkUp, int healthUp,
                          int level, int exp, CharacterType type) {
         super(id, name, desc, imagePath, manaNeeded);
         this.baseAttack = baseAtk;
@@ -31,7 +29,6 @@ public class CharacterCard extends Card {
         this.usedSwap = new ArrayList<SwapSpellCard>();
     }
 
-
     public String getDesc() {
         return this.description;
     }
@@ -40,11 +37,11 @@ public class CharacterCard extends Card {
         return this.imagePath;
     }
 
-    public int getHp() {
+    public double getHp() {
         return this.baseHp;
     }
 
-    public int getAttack() {
+    public double getAttack() {
         return this.baseAttack;
     }
 
@@ -56,30 +53,34 @@ public class CharacterCard extends Card {
         return this.exp;
     }
 
-    public CharacterType getType(){
+    public CharacterType getType() {
         return this.type;
+    }
+
+    public void setHp(double hp) {
+        this.baseHp = hp;
     }
 
     public void setExp(int exp) {
         this.exp = exp;
     }
 
-    public void addSwapSpell(SwapSpellCard swap){
-        if(this.usedSwap.size() == 0){
+    public void addSwapSpell(SwapSpellCard swap) {
+        if (this.usedSwap.size() == 0) {
             this.usedSwap.add(swap);
         }
-        else{
+        else {
             this.usedSwap.get(0).addDuration(swap.getDuration());
         }
     }
 
-    public void addPotionSpell(PotionSpellCard potion){
+    public void addPotionSpell(PotionSpellCard potion) {
         this.usedPotion.add(potion);
     }
 
-    public void reduceDuration(){
-        for (SwapSpellCard swap : usedSwap){
-            if(swap.getDuration() == 0){
+    public void reduceDuration() {
+        for (SwapSpellCard swap : usedSwap) {
+            if (swap.getDuration() == 0) {
                 swap.cancelSpell(this);
                 usedSwap.remove(swap);
             }
@@ -88,15 +89,14 @@ public class CharacterCard extends Card {
             }
         }
 
-        for (PotionSpellCard potion : usedPotion){
-            if(potion.getDuration() == 0){
+        for (PotionSpellCard potion : usedPotion) {
+            if (potion.getDuration() == 0) {
                 potion.cancelSpell(this);
                 usedPotion.remove(potion);
             }
             else {
                 potion.setDuration(potion.getDuration()-1);
             }
-
         }
     }
 
@@ -129,7 +129,7 @@ public class CharacterCard extends Card {
         }
     }
 
-    public void changeAtkHp(int newAtk, int newHp) {
+    public void changeAtkHp(double newAtk, double newHp) {
         this.baseAttack = newAtk;
         this.baseHp = newHp;
     }
@@ -162,6 +162,4 @@ public class CharacterCard extends Card {
         System.out.println("Exp: " + this.getExp());
         System.out.println("Level: " + this.getLevel());
     }
-
 }
-

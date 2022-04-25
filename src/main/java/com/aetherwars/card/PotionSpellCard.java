@@ -13,15 +13,15 @@ public class PotionSpellCard extends Cancelable {
 
     @Override
     public void useSpell(CharacterCard target) {
-        int newAtk = Math.max(0, target.getAttack() + this.attackChangeValue);
-        int newHp = Math.max(0, target.getHp() + this.hpChangeValue);
+        double newAtk = Math.max(0, target.getAttack() + this.attackChangeValue);
+        double newHp = Math.max(0, target.getHp() + this.hpChangeValue);
         target.changeAtkHp(newAtk, newHp);
     }
 
     public void cancelSpell(CharacterCard target) {
         // -> NOTE : Kalo dicancel bisa jadi Hp = 0, -> MATI
-        int newAtk = Math.max(0, target.getAttack() - this.attackChangeValue);
-        int newHp = Math.max(0, target.getHp() - this.hpChangeValue);
+        double newAtk = Math.max(0, target.getAttack() - this.attackChangeValue);
+        double newHp = Math.max(0, target.getHp() - this.hpChangeValue);
         target.changeAtkHp(newAtk, newHp);
     }
 
@@ -30,5 +30,4 @@ public class PotionSpellCard extends Cancelable {
         PotionSpellCard cc = new PotionSpellCard(c.id, c.name, c.description, c.imagePath, c.manaNeeded, 0, 0, 0 );
         return cc;
     }
-
 }

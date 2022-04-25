@@ -8,8 +8,8 @@ public class SwapSpellCard extends Cancelable {
 
     @Override
     public void useSpell(CharacterCard target) {
-        int newAtk = Math.max(0, target.getHp());
-        int newHp = Math.max(0, target.getAttack());
+        double newAtk = Math.max(0, target.getHp());
+        double newHp = Math.max(0, target.getAttack());
         target.changeAtkHp(newAtk, newHp);
     }
 
@@ -18,7 +18,7 @@ public class SwapSpellCard extends Cancelable {
         this.useSpell(target);
     }
 
-    public void addDuration(int dur){
+    public void addDuration(int dur) {
         this.duration += dur;
     }
 

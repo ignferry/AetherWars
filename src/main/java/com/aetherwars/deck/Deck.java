@@ -45,7 +45,8 @@ public class Deck {
 
     public List<Card> draw() {
         List<Card> gacha = new ArrayList<>();
-        for (int i = 0; i < Math.min(3, this.getCardTotal()); i++) {
+        int cardTotal = this.getCardTotal();
+        for (int i = 0; i < Math.min(3, cardTotal); i++) {
             gacha.add(this.cardDeck.remove(this.getCardTotal()-1));
         }
         return gacha;
@@ -56,7 +57,8 @@ public class Deck {
     }
 
     public void returnCard(List<Card> returned) {
-        for (int i = 0; i < returned.size(); i++) {
+        int size = returned.size();
+        for (int i = 0; i < size; i++) {
             this.cardDeck.add(returned.remove(0));
         }
     }
