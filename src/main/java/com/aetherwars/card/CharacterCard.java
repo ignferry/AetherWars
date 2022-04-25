@@ -15,10 +15,10 @@ public class CharacterCard extends Card {
     private CharacterType type;
     private List<SpellCard> usedSpell;
 
-    public CharacterCard(int id, String name, String desc, String imagePath, int baseAtk, int baseHp,
-                         int atkUp, int healthUp,
+    public CharacterCard(int id, String name, String desc, String imagePath, int manaNeeded, int baseAtk, int baseHp,
+                          int atkUp, int healthUp,
                          int level, int exp, CharacterType type) {
-        super(id, name, desc, imagePath);
+        super(id, name, desc, imagePath, manaNeeded);
         this.baseAttack = baseAtk;
         this.baseHp = baseHp;
         this.attackUp = atkUp;
@@ -114,6 +114,7 @@ public class CharacterCard extends Card {
         this.name = other.name;
         this.description = other.description;
         this.imagePath = other.imagePath;
+        this.manaNeeded = other.manaNeeded;
         this.changeAtkHp(other.baseAttack, other.baseHp);
         this.attackUp = other.attackUp;
         this.healthUp = other.healthUp;
@@ -137,7 +138,7 @@ public class CharacterCard extends Card {
     }
 
     public static void main(String[] args) {
-        CharacterCard card = new CharacterCard(1, "Agumon", "Ini sebenernya digimon", "google.com", 10, 100, 4, 10, 1,
+        CharacterCard card = new CharacterCard(1, "Agumon", "Ini sebenernya digimon", "google.com", 1,10, 100,4, 10, 1,
                 0,
                 CharacterType.END);
         SpellCard sc = new LevelSpellCard(2, "AS", "ASAS", "google.com", 2, 3);
