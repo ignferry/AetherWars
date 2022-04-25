@@ -52,6 +52,10 @@ public class CardList {
         return this.cards.get(id);
     }
 
+    public CharacterCard getCharCards(int id) {
+        return this.characterCards.get(id-1);
+    }
+
     public Card getRandomCard() {
         List<Card> cardList = new ArrayList<Card>(cards.values());
         int randomIndex = new Random().nextInt(cardList.size());
