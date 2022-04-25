@@ -8,16 +8,17 @@ import com.aetherwars.util.CSVReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CardList {
+    private Map<Integer, Card> cards;
     private List<CharacterCard> characterCards;
     private List<MorphSpellCard> morphSpellCards;
     private List<PotionSpellCard> potionSpellCards;
     private List<SwapSpellCard> swapSpellCards;
 
     public CardList() {
+        this.cards = new HashMap<>();
         this.characterCards = new ArrayList<>();
         this.morphSpellCards = new ArrayList<>();
         this.potionSpellCards = new ArrayList<>();
@@ -30,6 +31,31 @@ public class CardList {
         this.loadPotionSpellCards(ptnCSVFile);
         this.loadSwapSpellCards(swapCSVFile);
         // this.loadLevelSpellCards(); SOON
+
+        // memasukkan semua kartu ke dalam HashMap cards
+        for (Card card: this.characterCards) {
+            this.cards.put(card.getId(), card);
+        }
+        for (Card card: this.morphSpellCards) {
+            this.cards.put(card.getId(), card);
+        }
+        for (Card card: this.potionSpellCards) {
+            this.cards.put(card.getId(), card);
+        }
+        for (Card card: this.swapSpellCards) {
+            this.cards.put(card.getId(), card);
+        }
+    }
+
+    // getter
+    public Card getById(int id) {
+        return this.cards.get(id);
+    }
+
+    public Card getRandomCard() {
+        List<Card> cardList = new ArrayList<Card>(cards.values());
+        int randomIndex = new Random().nextInt(cardList.size());
+        return cardList.get(randomIndex);
     }
 
     public void loadCharacterCards(File characterCSVFile) throws IOException, URISyntaxException {
@@ -51,7 +77,6 @@ public class CardList {
             CharacterCard newCharacterCard = new CharacterCard(id, name, desc, imagePath, attack, health, mana, attackup, healthup,
                     1, 0, type);
             this.characterCards.add(newCharacterCard);
-            System.out.println(newCharacterCard.getName());
         }
     }
 
@@ -69,7 +94,6 @@ public class CardList {
 
             MorphSpellCard newMorphSpellCard = new MorphSpellCard(id, name, desc, imagePath, targetid, mana);
             this.morphSpellCards.add(newMorphSpellCard);
-            System.out.println(newMorphSpellCard.getName());
         }
     }
 
@@ -90,7 +114,6 @@ public class CardList {
             PotionSpellCard newPotionSpellCard = new PotionSpellCard(id, name, desc, imagePath,
                     attack, hp, mana, duration);
             this.potionSpellCards.add(newPotionSpellCard);
-            System.out.println(newPotionSpellCard.getName());
         }
     }
 
@@ -108,7 +131,6 @@ public class CardList {
 
             SwapSpellCard newSwapSpellCard = new SwapSpellCard(id, name, desc, imagePath, mana, duration);
             this.swapSpellCards.add(newSwapSpellCard);
-            System.out.println(newSwapSpellCard.getName());
         }
     }
 }

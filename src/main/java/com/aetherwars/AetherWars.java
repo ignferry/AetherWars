@@ -53,6 +53,7 @@ public class AetherWars extends Application {
 
       CardList cards = new CardList();
       cards.loadCards(characterCSVFile, morphCSVFile, ptnCSVFile, swapCSVFile);
+
       text.setText("Minecraft: Aether Wars!");
     } catch (Exception e) {
       text.setText("Failed to load cards: " + e);
