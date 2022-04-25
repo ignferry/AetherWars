@@ -13,7 +13,8 @@ public class CharacterCard extends Card {
     private int level;
     private int exp = 0;
     private CharacterType type;
-    private List<SpellCard> usedSpell;
+    private List<SwapSpellCard> usedSwap;
+    private List<PotionSpellCard> usedPotion;
 
     public CharacterCard(int id, String name, String desc, String imagePath, int manaNeeded, int baseAtk, int baseHp,
                           int atkUp, int healthUp,
@@ -26,7 +27,8 @@ public class CharacterCard extends Card {
         this.level = level;
         this.addExp(exp);
         this.type = type;
-        this.usedSpell = new ArrayList<SpellCard>();
+        this.usedPotion = new ArrayList<PotionSpellCard>();
+        this.usedSwap = new ArrayList<SwapSpellCard>();
     }
 
 
@@ -62,8 +64,40 @@ public class CharacterCard extends Card {
         this.exp = exp;
     }
 
-    public void addSpell(SpellCard sc) {
-        this.usedSpell.add(sc);
+    public void addSwapSpell(SwapSpellCard swap){
+        if(this.usedSwap.size() == 0){
+            this.usedSwap.add(swap);
+        }
+        else{
+            this.usedSwap.get(0).addDuration(swap.getDuration());
+        }
+    }
+
+    public void addPotionSpell(PotionSpellCard potion){
+        this.usedPotion.add(potion);
+    }
+
+    public void reduceDuration(){
+        for (SwapSpellCard swap : usedSwap){
+            if(swap.getDuration() == 0){
+                swap.cancelSpell(this);
+                usedSwap.remove(swap);
+            }
+            else {
+                swap.setDuration(swap.getDuration() - 1);
+            }
+        }
+
+        for (PotionSpellCard potion : usedPotion){
+            if(potion.getDuration() == 0){
+                potion.cancelSpell(this);
+                usedPotion.remove(potion);
+            }
+            else {
+                potion.setDuration(potion.getDuration()-1);
+            }
+
+        }
     }
 
     public Boolean isExpMax() {
@@ -112,7 +146,8 @@ public class CharacterCard extends Card {
         this.level = 1;
         this.exp = 0;
         this.type = other.type;
-        this.usedSpell = new ArrayList<SpellCard>();
+        this.usedPotion = new ArrayList<PotionSpellCard>();
+        this.usedSwap = new ArrayList<SwapSpellCard>();
     }
 
     public Card clone(Card c) {

@@ -18,6 +18,10 @@ public class SwapSpellCard extends Cancelable {
         this.useSpell(target);
     }
 
+    public void addDuration(int dur){
+        this.duration += dur;
+    }
+
     public Card clone(Card c) {
         SwapSpellCard cc = new SwapSpellCard(c.id, c.name, c.description, c.imagePath, c.manaNeeded, 0);
         return cc;
