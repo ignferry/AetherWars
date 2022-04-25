@@ -1,6 +1,6 @@
 package com.aetherwars.card;
 
-public class PotionSpellCard extends SpellCard {
+public class PotionSpellCard extends Cancelable {
     private int attackChangeValue;
     private int hpChangeValue;
     // dilengkapi ya, ini dibuat biar bisa bikin cardList
