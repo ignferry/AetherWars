@@ -29,9 +29,6 @@ public class CharacterCard extends Card {
         this.usedSpell = new ArrayList<SpellCard>();
     }
 
-    public String getName() {
-        return this.name;
-    }
 
     public String getDesc() {
         return this.description;
@@ -63,16 +60,6 @@ public class CharacterCard extends Card {
 
     public void setExp(int exp) {
         this.exp = exp;
-    }
-
-    public void inflictSpellEffects() {
-        for (int i = 0; i < this.usedSpell.size(); i++) {
-            this.usedSpell.get(i).useSpell(this);
-            this.usedSpell.get(i).setDuration(this.usedSpell.get(i).getDuration() - 1);
-            if (this.usedSpell.get(i).getDuration() == 0) {
-                this.usedSpell.remove(i);
-            }
-        }
     }
 
     public void addSpell(SpellCard sc) {
@@ -141,14 +128,5 @@ public class CharacterCard extends Card {
         System.out.println("Level: " + this.getLevel());
     }
 
-    public static void main(String[] args) {
-        CharacterCard card = new CharacterCard(1, "Agumon", "Ini sebenernya digimon", "google.com", 1,10, 100,4, 10, 1,
-                0,
-                CharacterType.END);
-        SpellCard sc = new LevelSpellCard(2, "AS", "ASAS", "google.com", 2, 3);
-        card.addSpell(sc);
-        card.inflictSpellEffects();
-        card.cardInfo();
-    }
 }
 

@@ -22,4 +22,10 @@ abstract public class Card {
     }
 
     public int getId(){ return this.id; }
+
+    public String getDescription(){return this.description;}
+
+    public String getImagePath(){return this.imagePath;}
+
+    public int getManaNeeded(){return this.manaNeeded;}
 }
