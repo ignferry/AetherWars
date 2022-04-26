@@ -1,0 +1,3 @@
+id	name	description	imagepath	mana	duration	lvlModifier
+401	More Bigger More Satisfy	Spell that can make your agent more stronger and more uhh...	card/image/spell/lvl/Up.png	0	-1	1
+402	Weaken of the Darkness	Spell that make your agent be a looser ang shrinking it's***	card/image/spell/lvl/Down.png	0	-1	-1

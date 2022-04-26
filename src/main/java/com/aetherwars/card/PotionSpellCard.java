@@ -29,8 +29,8 @@ public class PotionSpellCard extends Cancelable {
     }
 
     @Override
-    public Card clone(Card c) {
-        PotionSpellCard cc = new PotionSpellCard(c.id, c.name, c.description, c.imagePath, c.manaNeeded, 0, 0, 0 );
+    public Card clone() {
+        PotionSpellCard cc = new PotionSpellCard(this.id, this.name, this.description, this.imagePath, this.manaNeeded, this.duration, this.attackChangeValue, this.hpChangeValue );
         return cc;
     }
 }

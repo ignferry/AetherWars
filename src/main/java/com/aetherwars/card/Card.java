@@ -7,7 +7,7 @@ abstract public class Card {
     protected String imagePath;
     protected int manaNeeded;
 
-    abstract public Card clone(Card c);
+    abstract public Card clone();
 
     Card(int id, String name, String description, String imagePath, int manaNeeded) {
         this.id = id;

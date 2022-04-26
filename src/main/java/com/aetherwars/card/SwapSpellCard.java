@@ -22,8 +22,8 @@ public class SwapSpellCard extends Cancelable {
         this.duration += dur;
     }
 
-    public Card clone(Card c) {
-        SwapSpellCard cc = new SwapSpellCard(c.id, c.name, c.description, c.imagePath, c.manaNeeded, 0);
+    public Card clone() {
+        SwapSpellCard cc = new SwapSpellCard(this.id, this.name, this.description, this.imagePath, this.manaNeeded, this.duration);
         return cc;
     }
 }

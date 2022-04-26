@@ -31,8 +31,8 @@ public class MorphSpellCard extends SpellCard {
     public CharacterCard getNewForm(){return this.newForm;}
 
     @Override
-    public Card clone(Card c) {
-        MorphSpellCard cc = new MorphSpellCard(c.id, c.name, c.description, c.imagePath, c.manaNeeded, 0);
+    public Card clone() {
+        MorphSpellCard cc = new MorphSpellCard(this.id, this.name, this.description, this.imagePath, this.manaNeeded, this.targetId);
         return cc;
     }
 
