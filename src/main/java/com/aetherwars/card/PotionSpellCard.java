@@ -11,6 +11,9 @@ public class PotionSpellCard extends Cancelable {
         this.hpChangeValue = hpChangeValue;
     }
 
+    public int getAttackChangeValue(){return this.attackChangeValue;}
+    public int getHpChangeValue(){return this.hpChangeValue;}
+
     @Override
     public void useSpell(CharacterCard target) {
         double newAtk = Math.max(0, target.getAttack() + this.attackChangeValue);

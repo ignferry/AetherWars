@@ -9,6 +9,8 @@ public class LevelSpellCard extends SpellCard {
         this.modifierLvl = modifierLvl;
     }
 
+    public int getModifierLvl(){return this.modifierLvl;}
+    
     @Override
     public void useSpell(CharacterCard target) {
         for (int i = 0; i < Math.abs(this.modifierLvl); i++) {
