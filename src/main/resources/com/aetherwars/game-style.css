@@ -6,3 +6,22 @@
 .text {
     -fx-font-family: "Minecraft";
 }
+
+.mana-progress-bar .bar {
+    -fx-padding: 0px;
+    -fx-background-insets: 0;
+}
+
+.hp-progress-bar .track {
+    -fx-control-inner-background: black;
+}
+
+.hp-progress-bar .bar {
+    -fx-background-color: red;
+}
+
+.xp-progress-bar .bar {
+    -fx-padding: 0px;
+    -fx-background-insets: 0;
+    -fx-background-color: green;
+}

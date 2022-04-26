@@ -8,12 +8,12 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.FieldCardController">
+<StackPane fx:id="fieldCardPane" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="130.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.FieldCardController">
    <children>
-      <ImageView fx:id="cardImageView" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="cardImageView" fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
       <HBox prefHeight="30.0" prefWidth="130.0">
          <children>
-            <ImageView fx:id="typeImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="typeImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -28,10 +28,13 @@
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../gameImages/atk-icon.png" />
-               </image></ImageView>
-            <Label fx:id="atkLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="99" textFill="WHITE">
+               </image>
+               <HBox.margin>
+                  <Insets top="2.5" />
+               </HBox.margin></ImageView>
+            <Label fx:id="atkLabel" alignment="CENTER" prefHeight="25.0" styleClass="text" text="99" textFill="WHITE">
                <font>
-                  <Font name="Arial Black" size="14.0" />
+                  <Font name="Arial Black" size="16.0" />
                </font>
                <effect>
                   <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0">
@@ -43,15 +46,15 @@
             </Label>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="5.0" />
+                  <Insets left="5.0" top="2.5" />
                </HBox.margin>
                <image>
                   <Image url="@../gameImages/hp-icon.png" />
                </image>
             </ImageView>
-            <Label fx:id="HPLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="99" textFill="WHITE">
+            <Label fx:id="HPLabel" alignment="CENTER" prefHeight="25.0" styleClass="text" text="99" textFill="WHITE">
                <font>
-                  <Font name="Arial Black" size="14.0" />
+                  <Font name="Arial Black" size="16.0" />
                </font>
                <effect>
                   <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0">
@@ -73,7 +76,7 @@
          <children>
             <Label fx:id="levelLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="Lv.10" textFill="WHITE">
                <font>
-                  <Font name="Arial Black" size="14.0" />
+                  <Font name="Arial Black" size="16.0" />
                </font>
                <effect>
                   <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0">
@@ -89,7 +92,7 @@
          <children>
             <Label fx:id="expLabel" alignment="CENTER" prefHeight="20.0" styleClass="text" text="9/10" textAlignment="RIGHT" textFill="WHITE">
                <font>
-                  <Font name="Arial Black" size="14.0" />
+                  <Font name="Arial Black" size="16.0" />
                </font>
                <effect>
                   <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0">
