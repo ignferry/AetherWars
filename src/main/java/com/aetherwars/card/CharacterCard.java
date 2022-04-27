@@ -65,6 +65,10 @@ public class CharacterCard extends Card {
         this.exp = exp;
     }
 
+    public boolean isDie(){
+        return this.baseHp <= 0;
+    }
+
     public void addSwapSpell(SwapSpellCard swap) {
         if (this.usedSwap.size() == 0) {
             this.usedSwap.add(swap);
