@@ -13,22 +13,22 @@ public class MorphSpellCard extends SpellCard {
     public MorphSpellCard(int id, String name, String desc, String imagePath, int mana, int targetId) {
         super(id, name, desc, imagePath, mana, -1);
         this.targetId = targetId;
-        CardList cl = new CardList();
-        File charCSV = new File("..\\..\\..\\resources\\com.aetherwars\\card\\data\\character.csv");
-        try{
-            cl.loadCharacterCards(charCSV);
-        }
-        catch (IOException e) {
-            ;
-        }
-        catch (URISyntaxException e) {
-            ;
-        }
-        this.newForm = cl.getCharCards(targetId);
+
+//        CardList cl = new CardList();
+//        File charCSV = new File("..\\..\\..\\resources\\com.aetherwars\\card\\data\\character.csv");
+//        try{
+//            cl.loadCharacterCards(charCSV);
+//        }
+//        catch (IOException e) {
+//            ;
+//        }
+//        catch (URISyntaxException e) {
+//            ;
+//        }
+//        this.newForm = cl.getCharCards(targetId);
     }
 
     public int getTargetId(){return this.targetId;}
-    public CharacterCard getNewForm(){return this.newForm;}
 
     @Override
     public Card clone() {
