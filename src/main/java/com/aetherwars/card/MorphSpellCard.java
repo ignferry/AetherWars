@@ -13,7 +13,6 @@ public class MorphSpellCard extends SpellCard {
     public MorphSpellCard(int id, String name, String desc, String imagePath, int mana, int targetId) {
         super(id, name, desc, imagePath, mana, -1);
         this.targetId = targetId;
-        this.newForm = (CharacterCard) CardList.getById(targetId);
 
 //        CardList cl = new CardList();
 //        File charCSV = new File("..\\..\\..\\resources\\com.aetherwars\\card\\data\\character.csv");
@@ -30,7 +29,6 @@ public class MorphSpellCard extends SpellCard {
     }
 
     public int getTargetId(){return this.targetId;}
-    public CharacterCard getNewForm(){return this.newForm;}
 
     @Override
     public Card clone() {

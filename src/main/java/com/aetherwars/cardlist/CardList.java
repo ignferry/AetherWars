@@ -103,7 +103,7 @@ public class CardList {
     }
 
     public static Card getRandomCard() {
-        List<Card> cardList = new ArrayList<Card>(cards.values());
+        List<Card> cardList = new ArrayList<>(cards.values());
         int randomIndex = new Random().nextInt(cardList.size());
         return cardList.get(randomIndex).clone();
     }
