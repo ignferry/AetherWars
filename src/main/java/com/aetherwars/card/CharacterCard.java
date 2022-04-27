@@ -77,6 +77,7 @@ public class CharacterCard extends Card {
     public void addSwapSpell(SwapSpellCard swap) {
         if (this.usedSwap.size() == 0) {
             this.usedSwap.add(swap);
+            swap.useSpell(this);
         }
         else {
             this.usedSwap.get(0).addDuration(swap.getDuration());
@@ -85,6 +86,7 @@ public class CharacterCard extends Card {
 
     public void addPotionSpell(PotionSpellCard potion) {
         this.usedPotion.add(potion);
+        potion.useSpell(this);
     }
 
     public void reduceDuration() {
