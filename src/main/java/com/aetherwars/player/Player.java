@@ -22,6 +22,11 @@ public class Player {
         this.mana = 1;
         this.hand = new ArrayList<>();
         this.playerDeck = new Deck();
+
+        List<Card> initialHand = this.playerDeck.draw();
+        for (Card card : initialHand) {
+            this.hand.add(card);
+        }
     }
 
     public int getId() {

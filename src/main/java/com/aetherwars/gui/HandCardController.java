@@ -5,7 +5,7 @@ import com.aetherwars.card.*;
 import com.aetherwars.cardlist.CardList;
 import com.aetherwars.event.Event;
 import com.aetherwars.event.EventBroker;
-import com.aetherwars.event.ClickCardEvent;
+import com.aetherwars.event.ClickHandCardEvent;
 import com.aetherwars.event.Publisher;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
@@ -37,6 +37,10 @@ public class HandCardController implements Initializable, Publisher {
     @FXML private ImageView typeImageView;
 
     private Card card;
+
+    public Card getCard() {
+        return this.card;
+    }
 
     public void setCard(Card c) {
         EventBroker.addSubscriber(this, EventBroker.getGameController());
@@ -259,7 +263,7 @@ public class HandCardController implements Initializable, Publisher {
 
     @FXML
     public void onMouseClicked(MouseEvent e) {
-        publish(new ClickCardEvent(this.card, false));
+        publish(new ClickHandCardEvent(this));
     }
 
     @Override

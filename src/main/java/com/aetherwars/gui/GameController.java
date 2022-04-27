@@ -15,11 +15,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,6 +50,9 @@ public class GameController implements Initializable, Publisher, Subscriber {
     private GridPane manaGrid;
     private Player player1;
     private Player player2;
+    private boolean hasDrawn;
+    private List<HandCardController> drawnCardControllers;
+    private List<HandCardController> handCardControllers;
 
     public GameController(Player player1, Player player2) {
         this.player1 = player1;
@@ -57,6 +63,10 @@ public class GameController implements Initializable, Publisher, Subscriber {
         player1NameLabel.setText(player1.getName());
         player2NameLabel.setText(player2.getName());
         numOfCardsLabel.setText(Integer.toString(player1.getPlayerDeck().getCardTotal()));
+        drawRectangle.setFill(Color.rgb(0, 100, 0));
+        this.drawnCardControllers = new ArrayList<>();
+        this.handCardControllers = new ArrayList<>();
+        setHand();
         setManaGrid();
         startDrawPhase();
     }
@@ -69,30 +79,58 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
     @Override
     public void onEvent(Event event) {
-        if (event instanceof ClickCardEvent) {
-            ClickCardEvent clickCardEvent = (ClickCardEvent) event;
+        if (event instanceof ClickHandCardEvent) {
+            // Menampilkan infobox untuk kartu yang bersangkutan
+            ClickHandCardEvent clickHandCardEvent = (ClickHandCardEvent) event;
+            Card card = clickHandCardEvent.getHandCardController().getCard();
             try {
                 cardInfoBox.getChildren().clear();
                 FXMLLoader cardInfoLoader = new FXMLLoader(AetherWars.class.getResource("view/card-info.fxml"));
                 cardInfoLoader.setControllerFactory(c -> new CardInfoController());
                 HBox infoBox = cardInfoLoader.load();
                 CardInfoController controller = cardInfoLoader.getController();
-                controller.setCardInfo(clickCardEvent.getCard(), clickCardEvent.isCharCardInField());
+                controller.setCardInfo(card, false);
                 cardInfoBox.getChildren().add(infoBox);
             }
             catch (IOException e){
                 e.printStackTrace();
             }
 
+            // Memilih kartu untuk didraw, menambahkannya ke hand, dan mengembalikan sisanya ke deck
+            if (GameState.getCurrentPhase() == Phase.DRAW && !hasDrawn) {
+                getCurrentPlayer().getHand().add(card);
+                addCardToHand(card);
+
+                for (HandCardController c : drawnCardControllers) {
+                    EventBroker.removeObject(c);
+                }
+
+                drawnCardControllers.remove(clickHandCardEvent.getHandCardController());
+
+                List<Card> leftOverCard = new ArrayList<>();
+                for (HandCardController c : drawnCardControllers) {
+                    leftOverCard.add(c.getCard());
+                }
+                getCurrentPlayer().getPlayerDeck().returnCard(leftOverCard);
+
+                numOfCardsLabel.setText(Integer.toString(getCurrentPlayer().getPlayerDeck().getCardTotal()));
+                cardSelectionBox.getChildren().clear();
+                cardSelectionBox.setVisible(false);
+                handBox.setDisable(false);
+                hasDrawn = true;
+                nextPhaseButton.setDisable(false);
+            }
+
             if (GameState.getCurrentPhase() == Phase.PLAN) {
                 manaStackPane.setDisable(false);
                 trashButton.setDisable(false);
             }
+            else {
+                manaStackPane.setDisable(true);
+                trashButton.setDisable(true);
+            }
         }
         if (event instanceof ManaUsedEvent) {
-
-        }
-        if (event instanceof AddCardToHandEvent) {
 
         }
         if (event instanceof AddCardToFieldEvent) {
@@ -111,38 +149,42 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
     }
 
-    public void onNexPhaseButtonClick() {
+    @FXML
+    public void onNextPhaseButtonClick(MouseEvent e) {
         GameState.changeToNextPhase();
         if (GameState.getCurrentPhase() == Phase.DRAW) {
             GameState.changeTurn();
             prepareNewTurn();
             startDrawPhase();
+            drawRectangle.setFill(Color.rgb(0, 100, 0));
+            endRectangle.setFill(Color.rgb(85,85,85));
         }
         else if (GameState.getCurrentPhase() == Phase.PLAN) {
-
+            planRectangle.setFill(Color.rgb(0, 100, 0));
+            drawRectangle.setFill(Color.rgb(85,85,85));
         }
         else if (GameState.getCurrentPhase() == Phase.ATTACK) {
-
+            attackRectangle.setFill(Color.rgb(0, 100, 0));
+            planRectangle.setFill(Color.rgb(85,85,85));
         }
         else if (GameState.getCurrentPhase() == Phase.END) {
-
+            endRectangle.setFill(Color.rgb(0, 100, 0));
+            attackRectangle.setFill(Color.rgb(85,85,85));
         }
 
     }
 
     private void startDrawPhase() {
+        hasDrawn = false;
+
         cardSelectionBox.setVisible(true);
         handBox.setDisable(true);
 
-        Deck currentDeck;
-        if (GameState.getCurrentPlayerId() == 1) {
-            currentDeck = player1.getPlayerDeck();
-        }
-        else {
-           currentDeck = player2.getPlayerDeck();
-        }
+        Deck currentDeck = getCurrentPlayer().getPlayerDeck();
 
         List<Card> drawnCard = currentDeck.draw();
+
+        drawnCardControllers = new ArrayList<>();
 
         for (Card card : drawnCard) {
             System.out.println(card.getName());
@@ -152,6 +194,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                 StackPane handCard = handCardLoader.load();
                 HandCardController controller = handCardLoader.getController();
                 controller.setCard(card);
+                drawnCardControllers.add(controller);
                 cardSelectionBox.setAlignment(Pos.CENTER);
                 HBox.setMargin(handCard, new Insets(20,80,20,80));
                 cardSelectionBox.getChildren().add(handCard);
@@ -166,6 +209,17 @@ public class GameController implements Initializable, Publisher, Subscriber {
         this.turnLabel.setText(Integer.toString(GameState.getCurrentRound()));
         this.manaProgressBar.setProgress(1);
         this.setManaGrid();
+
+        for (HandCardController c : handCardControllers) {
+            EventBroker.removeObject(c);
+        }
+
+        handBox.getChildren().clear();
+
+        this.drawnCardControllers = new ArrayList<>();
+        this.handCardControllers = new ArrayList<>();
+
+        setHand();
     }
 
     private void setManaGrid() {
@@ -191,6 +245,43 @@ public class GameController implements Initializable, Publisher, Subscriber {
         column.setPercentWidth(100);
         manaGrid.getColumnConstraints().add(column);
         manaStackPane.getChildren().add(manaGrid);
+    }
+
+    private void setHand() {
+        List<Card> hand = getCurrentPlayer().getHand();
+
+        if (hand.size() == 5) {
+            hand.remove(0);
+        }
+
+        for (Card card : hand) {
+            addCardToHand(card);
+        }
+    }
+
+    private void addCardToHand(Card card) {
+        try {
+            FXMLLoader handCardLoader = new FXMLLoader(AetherWars.class.getResource("view/hand-card.fxml"));
+            handCardLoader.setControllerFactory(c -> new HandCardController());
+            StackPane handCard = handCardLoader.load();
+            HandCardController controller = handCardLoader.getController();
+            controller.setCard(card);
+            handBox.setAlignment(Pos.CENTER);
+            HBox.setMargin(handCard, new Insets(5,5,5,5));
+            handBox.getChildren().add(handCard);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Player getCurrentPlayer() {
+        if (GameState.getCurrentPlayerId() == 1) {
+            return player1;
+        }
+        else {
+            return player2;
+        }
     }
 
     @Override

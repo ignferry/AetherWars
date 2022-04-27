@@ -77,8 +77,6 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         zoomTransition.setToX(1.2);
         zoomTransition.setByY(1.2);
         zoomTransition.play();
-
-        publish(new ClickCardEvent(characterCard, true));
     }
 
     @FXML
@@ -89,13 +87,11 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         zoomTransition.setToX(1);
         zoomTransition.setByY(1);
         zoomTransition.play();
-
-        publish(new ClickCardEvent(null, false));
     }
 
     @FXML
     public void onMouseClick(MouseEvent e) {
-        publish(new ClickCardEvent(this.characterCard, true));
+
     }
 
     @Override
