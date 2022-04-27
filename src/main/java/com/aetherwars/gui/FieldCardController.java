@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -30,9 +31,18 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
     @FXML private ImageView cardImageView;
 
     private CharacterCard characterCard;
+    private String slot;
 
-    public void setCard(CharacterCard c) {
-        characterCard = c;
+    public void setCard(CharacterCard c, String slot) {
+        EventBroker.addSubscriber(this, EventBroker.getGameController());
+        EventBroker.addSubscriber(EventBroker.getGameController(), this);
+        this.characterCard = c;
+        this.slot = slot;
+
+        setCardAttributes(c);
+    }
+
+    public void setCardAttributes(CharacterCard c) {
         this.atkLabel.setText(decimalFormat().format(c.getAttack()));
         this.HPLabel.setText(decimalFormat().format(c.getHp()));
         this.levelLabel.setText("Lv. "+ c.getLevel());
@@ -51,14 +61,6 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         }
     }
 
-    public void setCardAttributes(CharacterCard c) {
-        characterCard = c;
-        this.atkLabel.setText(decimalFormat().format(c.getAttack()));
-        this.HPLabel.setText(decimalFormat().format(c.getHp()));
-        this.levelLabel.setText("Lv. "+ c.getLevel());
-        this.expLabel.setText(c.getExp() + "/" + c.getLevel());
-    }
-
     private static DecimalFormat decimalFormat() {
         DecimalFormatSymbols d = new DecimalFormatSymbols(Locale.US);
         return new DecimalFormat("#.#", d);
@@ -75,7 +77,7 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         zoomTransition.setFromX(1);
         zoomTransition.setFromY(1);
         zoomTransition.setToX(1.2);
-        zoomTransition.setByY(1.2);
+        zoomTransition.setToY(1.2);
         zoomTransition.play();
     }
 
@@ -85,20 +87,51 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         zoomTransition.setFromX(1.2);
         zoomTransition.setFromY(1.2);
         zoomTransition.setToX(1);
-        zoomTransition.setByY(1);
+        zoomTransition.setToY(1);
         zoomTransition.play();
     }
 
     @FXML
     public void onMouseClick(MouseEvent e) {
+        publish(new ClickFieldCardEvent(this));
+    }
 
+    public CharacterCard getCharacterCard() {
+        return this.characterCard;
+    }
+
+    public String getSlot() {
+        return this.slot;
     }
 
     @Override
     public void onEvent(Event event) {
-        if (event instanceof AttrChangedEvent) {
-            AttrChangedEvent attrChangedEvent = (AttrChangedEvent) event;
-            setCard(attrChangedEvent.getCharacterCard());
+        if (event instanceof RemoveFromFieldEvent) {
+            RemoveFromFieldEvent removeFromFieldEvent = (RemoveFromFieldEvent) event;
+            if (removeFromFieldEvent.getFieldCardController() == this) {
+                StackPane parent = (StackPane) fieldCardPane.getParent();
+                parent.getChildren().remove(fieldCardPane);
+            }
+        }
+        if (event instanceof UseSpellEvent) {
+            UseSpellEvent useSpellEvent = (UseSpellEvent) event;
+            if (useSpellEvent.getFieldCardController() == this) {
+                useSpellEvent.getSpellCard().useSpell(this.characterCard);
+                setCardAttributes(this.characterCard);
+            }
+        }
+        if (event instanceof AddExpWithManaEvent) {
+            AddExpWithManaEvent addExpWithManaEvent = (AddExpWithManaEvent) event;
+            if (addExpWithManaEvent.getFieldCardController() == this) {
+                this.characterCard.addExp(1);
+                setCardAttributes(this.characterCard);
+            }
+        }
+        if (event instanceof AttackEvent) {
+            AttackEvent attackEvent = (AttackEvent) event;
+            if (attackEvent.getDefender() == this) {
+                // TODO: receive damage dari attacker
+            }
         }
     }
 

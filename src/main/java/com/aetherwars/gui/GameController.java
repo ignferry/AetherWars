@@ -2,16 +2,21 @@ package com.aetherwars.gui;
 
 import com.aetherwars.AetherWars;
 import com.aetherwars.card.Card;
+import com.aetherwars.card.CharacterCard;
+import com.aetherwars.card.LevelSpellCard;
+import com.aetherwars.card.SpellCard;
 import com.aetherwars.deck.Deck;
 import com.aetherwars.event.*;
 import com.aetherwars.gamestate.GameState;
 import com.aetherwars.gamestate.Phase;
+import com.aetherwars.model.Character;
 import com.aetherwars.player.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -22,9 +27,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GameController implements Initializable, Publisher, Subscriber {
     @FXML private Label player1NameLabel;
@@ -50,9 +53,18 @@ public class GameController implements Initializable, Publisher, Subscriber {
     private GridPane manaGrid;
     private Player player1;
     private Player player2;
+
+    // Draw phase attributes
     private boolean hasDrawn;
     private List<HandCardController> drawnCardControllers;
     private List<HandCardController> handCardControllers;
+
+    // Plan phase attributes
+    private HandCardController selectedHandCardController;
+
+    // Plan phase and attack phase attributes
+    private Map<String, FieldCardController> fieldCardControllers;
+    private FieldCardController selectedOwnFieldCardController;
 
     public GameController(Player player1, Player player2) {
         this.player1 = player1;
@@ -66,6 +78,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
         drawRectangle.setFill(Color.rgb(0, 100, 0));
         this.drawnCardControllers = new ArrayList<>();
         this.handCardControllers = new ArrayList<>();
+        this.fieldCardControllers = new HashMap<>();
+
         setHand();
         setManaGrid();
         startDrawPhase();
@@ -80,27 +94,16 @@ public class GameController implements Initializable, Publisher, Subscriber {
     @Override
     public void onEvent(Event event) {
         if (event instanceof ClickHandCardEvent) {
+            selectedHandCardController = null;
+            selectedOwnFieldCardController = null;
+
             // Menampilkan infobox untuk kartu yang bersangkutan
             ClickHandCardEvent clickHandCardEvent = (ClickHandCardEvent) event;
             Card card = clickHandCardEvent.getHandCardController().getCard();
-            try {
-                cardInfoBox.getChildren().clear();
-                FXMLLoader cardInfoLoader = new FXMLLoader(AetherWars.class.getResource("view/card-info.fxml"));
-                cardInfoLoader.setControllerFactory(c -> new CardInfoController());
-                HBox infoBox = cardInfoLoader.load();
-                CardInfoController controller = cardInfoLoader.getController();
-                controller.setCardInfo(card, false);
-                cardInfoBox.getChildren().add(infoBox);
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+            setCardInfo(card, false);
 
             // Memilih kartu untuk didraw, menambahkannya ke hand, dan mengembalikan sisanya ke deck
-            if (GameState.getCurrentPhase() == Phase.DRAW && !hasDrawn) {
-                getCurrentPlayer().getHand().add(card);
-                addCardToHand(card);
-
+            if (GameState.getCurrentPhase() == Phase.DRAW && !hasDrawn && drawnCardControllers.contains(clickHandCardEvent.getHandCardController())) {
                 for (HandCardController c : drawnCardControllers) {
                     EventBroker.removeObject(c);
                 }
@@ -113,16 +116,20 @@ public class GameController implements Initializable, Publisher, Subscriber {
                 }
                 getCurrentPlayer().getPlayerDeck().returnCard(leftOverCard);
 
+                getCurrentPlayer().getHand().add(card);
+                addCardToHand(card);
+
                 numOfCardsLabel.setText(Integer.toString(getCurrentPlayer().getPlayerDeck().getCardTotal()));
                 cardSelectionBox.getChildren().clear();
                 cardSelectionBox.setVisible(false);
-                handBox.setDisable(false);
                 hasDrawn = true;
                 nextPhaseButton.setDisable(false);
-            }
 
-            if (GameState.getCurrentPhase() == Phase.PLAN) {
-                manaStackPane.setDisable(false);
+                handBox.setDisable(false);
+            }
+            else if (GameState.getCurrentPhase() == Phase.PLAN) {
+                selectedHandCardController = clickHandCardEvent.getHandCardController();
+
                 trashButton.setDisable(false);
             }
             else {
@@ -130,27 +137,116 @@ public class GameController implements Initializable, Publisher, Subscriber {
                 trashButton.setDisable(true);
             }
         }
-        if (event instanceof ManaUsedEvent) {
+        if (event instanceof ClickFieldCardEvent) {
+            ClickFieldCardEvent clickFieldCardEvent = (ClickFieldCardEvent) event;
+            CharacterCard card = clickFieldCardEvent.getFieldCardController().getCharacterCard();
+            setCardInfo(card, true);
 
-        }
-        if (event instanceof AddCardToFieldEvent) {
+            if (GameState.getCurrentPhase() == Phase.PLAN || GameState.getCurrentPhase() == Phase.ATTACK) {
+                if (isOwnFieldSlot(clickFieldCardEvent.getFieldCardController().getSlot())) {
+                    selectedOwnFieldCardController = clickFieldCardEvent.getFieldCardController();
+                    if (GameState.getCurrentPhase() == Phase.PLAN) {
+                        manaStackPane.setDisable(false);
+                        trashButton.setDisable(false);
+                    }
+                    else {
+                        manaStackPane.setDisable(true);
+                        trashButton.setDisable(true);
+                    }
+                }
+                else {
+                    manaStackPane.setDisable(true);
+                    trashButton.setDisable(true);
+                }
 
-        }
-        if (event instanceof AttackEvent) {
+                if (selectedHandCardController != null) {
+                    if (selectedHandCardController.getCard() instanceof SpellCard) {
+                        int manacost;
+                        if (selectedHandCardController.getCard() instanceof LevelSpellCard) {
+                            LevelSpellCard levelSpellCard = (LevelSpellCard) selectedHandCardController.getCard();
+                            manacost = levelSpellCard.getManaNeededAsPlayerLVL(card);
+                        }
+                        else {
+                            manacost = selectedHandCardController.getCard().getManaNeeded();
+                        }
 
+                        if (getCurrentPlayer().getMana() >= manacost) {
+                            SpellCard spellCard = (SpellCard) selectedHandCardController.getCard();
+                            publish(new UseSpellEvent(clickFieldCardEvent.getFieldCardController(), spellCard));
+                            publish(new RemoveHandCardEvent(selectedHandCardController));
+                            EventBroker.removeObject(selectedHandCardController);
+
+                            getCurrentPlayer().reduceMana(manacost);
+                            setCurrentManaBar();
+
+                            if (card.isDie()) {
+                                publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
+                                EventBroker.removeObject(clickFieldCardEvent.getFieldCardController());
+                            }
+
+                            cardInfoBox.getChildren().clear();
+                        }
+                    }
+                }
+                else if (selectedOwnFieldCardController != null
+                            && !isOwnFieldSlot(clickFieldCardEvent.getFieldCardController().getSlot())
+                            && GameState.getCurrentPhase() == Phase.ATTACK) {
+                    publish(new AttackEvent(selectedOwnFieldCardController, card));
+                    publish(new AttackEvent(clickFieldCardEvent.getFieldCardController(), selectedOwnFieldCardController.getCharacterCard()));
+
+                    if (card.isDie()) {
+                        publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
+                        EventBroker.removeObject(clickFieldCardEvent.getFieldCardController());
+                    }
+
+                    if (selectedOwnFieldCardController.getCharacterCard().isDie()) {
+                        publish(new RemoveFromFieldEvent(selectedOwnFieldCardController));
+                        EventBroker.removeObject(selectedOwnFieldCardController);
+                    }
+
+                    selectedOwnFieldCardController = null;
+                }
+            }
+
+            selectedHandCardController = null;
         }
     }
 
+    @FXML
     public void onTrashButtonClick() {
-
+        if (GameState.getCurrentPhase() == Phase.PLAN) {
+            System.out.println(selectedHandCardController);
+            if (selectedHandCardController != null) {
+                publish(new RemoveHandCardEvent(selectedHandCardController));
+                EventBroker.removeObject(selectedHandCardController);
+                selectedHandCardController = null;
+            }
+            if (selectedOwnFieldCardController != null) {
+                publish(new RemoveFromFieldEvent(selectedOwnFieldCardController));
+                EventBroker.removeObject(selectedOwnFieldCardController);
+                selectedOwnFieldCardController = null;
+            }
+            cardInfoBox.getChildren().clear();
+        }
     }
 
-    public void onManaStackPaneClick() {
+    @FXML
+    public void onManaPaneClick() {
+        if (GameState.getCurrentPhase() == Phase.PLAN
+                && selectedOwnFieldCardController != null
+                && getCurrentPlayer().getMana() > 0) {
+            // TODO: Cek sudah level exp max atau belum
+            publish(new AddExpWithManaEvent(selectedOwnFieldCardController));
+            getCurrentPlayer().reduceMana(1);
+            setCurrentManaBar();
 
+            setCardInfo(selectedOwnFieldCardController.getCharacterCard(), true);
+        }
     }
 
     @FXML
     public void onNextPhaseButtonClick(MouseEvent e) {
+        nextPhaseButton.setDisable(true);
         GameState.changeToNextPhase();
         if (GameState.getCurrentPhase() == Phase.DRAW) {
             GameState.changeTurn();
@@ -164,12 +260,62 @@ public class GameController implements Initializable, Publisher, Subscriber {
             drawRectangle.setFill(Color.rgb(85,85,85));
         }
         else if (GameState.getCurrentPhase() == Phase.ATTACK) {
+            manaStackPane.setDisable(true);
+            trashButton.setDisable(true);
             attackRectangle.setFill(Color.rgb(0, 100, 0));
             planRectangle.setFill(Color.rgb(85,85,85));
         }
         else if (GameState.getCurrentPhase() == Phase.END) {
             endRectangle.setFill(Color.rgb(0, 100, 0));
             attackRectangle.setFill(Color.rgb(85,85,85));
+        }
+        cardInfoBox.getChildren().clear();
+        selectedHandCardController = null;
+        selectedOwnFieldCardController = null;
+        nextPhaseButton.setDisable(false);
+    }
+
+    @FXML
+    public void onSlotPaneClick(MouseEvent e) {
+        // Meletakkan kartu dari hand ke field
+        if (selectedHandCardController != null) {
+            if (GameState.getCurrentPhase() == Phase.PLAN
+                    && selectedHandCardController.getCard() instanceof CharacterCard
+                    && e.getTarget() instanceof Rectangle
+                    && selectedHandCardController.getCard().getManaNeeded() <= getCurrentPlayer().getMana()) {
+                Rectangle r = (Rectangle) e.getTarget();
+                String slotId = r.getId();
+                if (isOwnFieldSlot(slotId)) {
+                    CharacterCard selectedCard = (CharacterCard) selectedHandCardController.getCard();
+
+                    try {
+                        // Menambahkan kartu ke field
+                        FXMLLoader fieldCardLoader = new FXMLLoader(AetherWars.class.getResource("view/field-card.fxml"));
+                        fieldCardLoader.setControllerFactory(c -> new FieldCardController());
+                        StackPane fieldCard = fieldCardLoader.load();
+                        FieldCardController controller = fieldCardLoader.getController();
+                        controller.setCard(selectedCard, slotId);
+                        fieldCardControllers.put(slotId, controller);
+                        for (Node n : getCurrentPlayerField().getChildren()) {
+                            if (n instanceof StackPane && n.getId().equals(slotId.toLowerCase())) {
+                                ((StackPane) n).getChildren().add(fieldCard);
+                            }
+                        }
+
+                        // Mengupdate mana player
+                        getCurrentPlayer().reduceMana(selectedHandCardController.getCard().getManaNeeded());
+                        setCurrentManaBar();
+
+                        // Menghapus kartu dari hand
+                        publish(new RemoveHandCardEvent(selectedHandCardController));
+                        EventBroker.removeObject(selectedHandCardController);
+                        selectedHandCardController = null;
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
         }
 
     }
@@ -178,7 +324,6 @@ public class GameController implements Initializable, Publisher, Subscriber {
         hasDrawn = false;
 
         cardSelectionBox.setVisible(true);
-        handBox.setDisable(true);
 
         Deck currentDeck = getCurrentPlayer().getPlayerDeck();
 
@@ -207,6 +352,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
     private void prepareNewTurn() {
         this.turnLabel.setText(Integer.toString(GameState.getCurrentRound()));
+        getCurrentPlayer().resetMana();
         this.manaProgressBar.setProgress(1);
         this.setManaGrid();
 
@@ -220,6 +366,10 @@ public class GameController implements Initializable, Publisher, Subscriber {
         this.handCardControllers = new ArrayList<>();
 
         setHand();
+    }
+
+    private void setCurrentManaBar() {
+        manaProgressBar.setProgress((float) getCurrentPlayer().getMana() / Math.min(GameState.getCurrentRound(), 10));
     }
 
     private void setManaGrid() {
@@ -275,6 +425,21 @@ public class GameController implements Initializable, Publisher, Subscriber {
         }
     }
 
+    private void setCardInfo(Card card, boolean isCardInField) {
+        try {
+            cardInfoBox.getChildren().clear();
+            FXMLLoader cardInfoLoader = new FXMLLoader(AetherWars.class.getResource("view/card-info.fxml"));
+            cardInfoLoader.setControllerFactory(c -> new CardInfoController());
+            HBox infoBox = cardInfoLoader.load();
+            CardInfoController controller = cardInfoLoader.getController();
+            controller.setCardInfo(card, isCardInField);
+            cardInfoBox.getChildren().add(infoBox);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     private Player getCurrentPlayer() {
         if (GameState.getCurrentPlayerId() == 1) {
             return player1;
@@ -282,6 +447,26 @@ public class GameController implements Initializable, Publisher, Subscriber {
         else {
             return player2;
         }
+    }
+
+    private AnchorPane getCurrentPlayerField() {
+        if (GameState.getCurrentPlayerId() == 1) {
+            return player1FieldPane;
+        }
+        else {
+            return player2FieldPane;
+        }
+    }
+
+    private boolean isOwnFieldSlot(String slot) {
+        List<String> l;
+        if (GameState.getCurrentPlayerId() == 1) {
+            l = Arrays.asList("A1", "B1", "C1", "D1", "E1");
+        }
+        else {
+            l = Arrays.asList("A2", "B2", "C2", "D2", "E2");
+        }
+        return l.contains(slot);
     }
 
     @Override

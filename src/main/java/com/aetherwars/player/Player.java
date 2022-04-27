@@ -61,7 +61,11 @@ public class Player {
         this.mana = Math.min(GameState.getCurrentRound(), 10);
     }
 
-    public void reduceMana(int value) {
-        this.mana -= value;
+    public boolean reduceMana(int value) {
+        if (this.mana >= value) {
+            this.mana -= value;
+            return true;
+        }
+        return false;
     }
 }

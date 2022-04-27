@@ -11,13 +11,15 @@ public class LevelSpellCard extends SpellCard {
 
     public int getModifierLvl(){return this.modifierLvl;}
 
-    public void manaNeededAsPlayerLVL (CharacterCard target) {
+    public int getManaNeededAsPlayerLVL (CharacterCard target) {
+        int manacost;
         if (target.getLevel()%2==0){    // Genap, lgsg bagi
-            this.manaNeeded = target.getLevel()/2;
+            manacost = target.getLevel()/2;
         }
         else {      // Ganjil, hasil bagi (floor) + 1
-            this.manaNeeded = target.getLevel()/2 + 1;
+            manacost = target.getLevel()/2 + 1;
         }
+        return manacost;
     }
     
     @Override

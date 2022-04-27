@@ -97,7 +97,7 @@
                            <children>
                               <AnchorPane fx:id="player1FieldPane" prefHeight="400.0" prefWidth="600.0">
                                  <children>
-                                    <StackPane fx:id="player1Pane" layoutX="20.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="player1Pane" layoutX="20.0" layoutY="135.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
@@ -106,45 +106,45 @@
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="A1" layoutX="170.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="a1" layoutX="170.0" layoutY="60.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="A1" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="B1" layoutX="320.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="b1" layoutX="320.0" layoutY="60.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="B1" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="C1" layoutX="170.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="c1" layoutX="170.0" layoutY="210.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="C1" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="D1" layoutX="320.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="d1" layoutX="320.0" layoutY="210.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="D1" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="E1" layoutX="470.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="e1" layoutX="470.0" layoutY="135.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="E1" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
@@ -156,52 +156,52 @@
                               <FlowPane prefHeight="400.0" prefWidth="166.0" />
                               <AnchorPane fx:id="player2FieldPane" prefHeight="400.0" prefWidth="600.0">
                                  <children>
-                                    <StackPane fx:id="E2" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="e2" layoutY="135.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="E2" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="B2" layoutX="150.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="b2" layoutX="150.0" layoutY="60.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="B2" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="D2" layoutX="150.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="d2" layoutX="150.0" layoutY="210.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="D2" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="A2" layoutX="300.0" layoutY="60.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="a2" layoutX="300.0" layoutY="60.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="A2" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="C2" layoutX="300.0" layoutY="210.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="c2" layoutX="300.0" layoutY="210.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
-                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
+                                          <Rectangle fx:id="C2" arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
                                        </children>
                                     </StackPane>
-                                    <StackPane fx:id="player2Pane" layoutX="450.0" layoutY="135.0" prefHeight="130.0" prefWidth="130.0">
+                                    <StackPane fx:id="player2Pane" layoutX="450.0" layoutY="135.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
                                        <children>
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8b8b8b" height="130.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="130.0">
                                              <effect>
@@ -288,7 +288,7 @@
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="trashButton" disable="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
+                        <Button fx:id="trashButton" disable="true" mnemonicParsing="false" onMouseClicked="#onTrashButtonClick" prefHeight="40.0" prefWidth="40.0">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -321,14 +321,14 @@
                   </HBox>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="100.0">
                      <children>
-                        <StackPane fx:id="manaStackPane" maxWidth="40.0" minWidth="40.0" prefHeight="150.0" prefWidth="40.0">
+                        <StackPane fx:id="manaStackPane" maxWidth="40.0" minWidth="40.0" onMouseClicked="#onManaPaneClick" prefHeight="150.0" prefWidth="40.0">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                            <children>
                               <ProgressBar fx:id="manaProgressBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="155.0" progress="1.0" rotate="270.0" styleClass="mana-progress-bar" StackPane.alignment="CENTER">
                                  <padding>
-                                    <Insets right="2.0" />
+                                    <Insets left="2.0" />
                                  </padding></ProgressBar>
                            </children>
                         </StackPane>

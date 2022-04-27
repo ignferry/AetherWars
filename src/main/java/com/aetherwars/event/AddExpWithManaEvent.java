@@ -2,10 +2,10 @@ package com.aetherwars.event;
 
 import com.aetherwars.gui.FieldCardController;
 
-public class RemoveFromFieldEvent implements Event{
+public class AddExpWithManaEvent implements Event {
     private FieldCardController fieldCardController;
 
-    public RemoveFromFieldEvent(FieldCardController fieldCardController) {
+    public AddExpWithManaEvent(FieldCardController fieldCardController) {
         this.fieldCardController = fieldCardController;
     }
 

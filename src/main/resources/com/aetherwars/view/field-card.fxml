@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane fx:id="fieldCardPane" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="130.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.FieldCardController">
+<StackPane fx:id="fieldCardPane" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="130.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.FieldCardController">
    <children>
       <ImageView fx:id="cardImageView" fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
       <HBox prefHeight="30.0" prefWidth="130.0">

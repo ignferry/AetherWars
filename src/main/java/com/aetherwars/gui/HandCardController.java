@@ -3,10 +3,7 @@ package com.aetherwars.gui;
 import com.aetherwars.AetherWars;
 import com.aetherwars.card.*;
 import com.aetherwars.cardlist.CardList;
-import com.aetherwars.event.Event;
-import com.aetherwars.event.EventBroker;
-import com.aetherwars.event.ClickHandCardEvent;
-import com.aetherwars.event.Publisher;
+import com.aetherwars.event.*;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +25,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class HandCardController implements Initializable, Publisher {
+public class HandCardController implements Initializable, Publisher, Subscriber {
     @FXML private StackPane handCardPane;
     @FXML private Label manaCostLabel;
     @FXML private ImageView cardImageView;
@@ -44,6 +41,7 @@ public class HandCardController implements Initializable, Publisher {
 
     public void setCard(Card c) {
         EventBroker.addSubscriber(this, EventBroker.getGameController());
+        EventBroker.addSubscriber(EventBroker.getGameController(), this);
         this.card = c;
 
         this.cardImageView.setImage(new Image(AetherWars.class.getResourceAsStream(c.getImagePath())));
@@ -136,7 +134,18 @@ public class HandCardController implements Initializable, Publisher {
     private void setAttributeBox(MorphSpellCard c) {
         CharacterCard target = (CharacterCard) CardList.getById(c.getTargetId());
 
-        ImageView targetTypeImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream(c.getImagePath())));
+        ImageView targetTypeImageView = new ImageView();
+
+        if (target.getType() == CharacterType.OVERWORLD) {
+            targetTypeImageView.setImage(new Image(AetherWars.class.getResourceAsStream("gameImages/overworld-icon.png")));
+        }
+        else if (target.getType() == CharacterType.NETHER) {
+            targetTypeImageView.setImage(new Image(AetherWars.class.getResourceAsStream("gameImages/nether-icon.png")));
+        }
+        else if (target.getType() == CharacterType.END) {
+            targetTypeImageView.setImage(new Image(AetherWars.class.getResourceAsStream("gameImages/end-icon.png")));
+        }
+
         targetTypeImageView.setFitHeight(20);
         targetTypeImageView.setFitWidth(20);
 
@@ -269,5 +278,16 @@ public class HandCardController implements Initializable, Publisher {
     @Override
     public void publish(Event event) {
         EventBroker.sendEvent(this, event);
+    }
+
+    @Override
+    public void onEvent(Event event) {
+        if (event instanceof RemoveHandCardEvent) {
+            RemoveHandCardEvent removeHandCardEvent = (RemoveHandCardEvent) event;
+            if (removeHandCardEvent.getHandCardController() == this) {
+                HBox parent = (HBox) handCardPane.getParent();
+                parent.getChildren().remove(handCardPane);
+            }
+        }
     }
 }

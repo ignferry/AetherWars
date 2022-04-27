@@ -45,7 +45,7 @@ public class CardInfoController implements Initializable {
             this.setAttributeInfo(characterCard);
             if (isCharacterCardInField) {
                 this.levelLabel.setText(Integer.toString(characterCard.getLevel()));
-                this.xpProgressBar.setProgress((double) characterCard.getExp() / characterCard.getLevel());
+                this.xpProgressBar.setProgress((double) characterCard.getExp() / (characterCard.getLevel() * 2 - 1));
                 GridPane xpGrid = new GridPane();
                 xpGrid.setMinWidth(150);
                 xpGrid.setMinHeight(20);
