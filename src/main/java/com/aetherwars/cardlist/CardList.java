@@ -99,17 +99,13 @@ public class CardList {
 
     // getter
     public static Card getById(int id) {
-        return cards.get(id);
-    }
-
-    public static CharacterCard getCharCards(int id) {
-        return characterCards.get(id-1);
+        return cards.get(id).clone();
     }
 
     public static Card getRandomCard() {
         List<Card> cardList = new ArrayList<Card>(cards.values());
         int randomIndex = new Random().nextInt(cardList.size());
-        return cardList.get(randomIndex);
+        return cardList.get(randomIndex).clone();
     }
 
     public static void loadCharacterCards(File characterCSVFile) throws IOException, URISyntaxException {
@@ -149,7 +145,7 @@ public class CardList {
                 int targetid = Integer.parseInt(row[4]);
                 int mana = Integer.parseInt(row[5]);
 
-                MorphSpellCard newMorphSpellCard = new MorphSpellCard(id, name, desc, imagePath, targetid, mana);
+                MorphSpellCard newMorphSpellCard = new MorphSpellCard(id, name, desc, imagePath, mana, targetid);
                 morphSpellCards.add(newMorphSpellCard);
             }
         }
@@ -171,7 +167,7 @@ public class CardList {
                 int duration = Integer.parseInt(row[7]);
 
                 PotionSpellCard newPotionSpellCard = new PotionSpellCard(id, name, desc, imagePath,
-                        attack, hp, mana, duration);
+                        mana, duration, attack, hp);
                 potionSpellCards.add(newPotionSpellCard);
             }
         }
