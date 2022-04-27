@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.aetherwars.card.Card;
 import com.aetherwars.card.CharacterCard;
 import com.aetherwars.cardlist.CardList;
+import com.aetherwars.event.EventBroker;
+import com.aetherwars.gamestate.GameState;
 import com.aetherwars.gui.FieldCardController;
 import com.aetherwars.gui.GameController;
+import com.aetherwars.player.Player;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -47,8 +51,28 @@ public class AetherWars extends Application {
     root.getChildren().add(text);
 
     Font.loadFont(getClass().getResourceAsStream("Minecraft.ttf"),14);
+    Player player1 = new Player(1, "Steve");
+    Player player2 = new Player(2, "Jack");
+
+    GameState.setInitialGameState();
+
+
+    try {
+      CardList.load();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/game.fxml"));
+    fxmlLoader.setControllerFactory(c -> new GameController(player1, player2));
     Parent r = fxmlLoader.load();
+
+    GameController controller = fxmlLoader.getController();
+    EventBroker.initializeNewBroker();
+    EventBroker.setGameController(controller);
+    controller.setInitialGame();
+
     Scene scene = new Scene(r);
     scene.getStylesheets().add(getClass().getResource("game-style.css").toExternalForm());
 

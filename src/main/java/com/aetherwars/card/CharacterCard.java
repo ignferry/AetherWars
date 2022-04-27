@@ -150,8 +150,9 @@ public class CharacterCard extends Card {
         this.usedSwap = new ArrayList<SwapSpellCard>();
     }
 
-    public Card clone(Card c) {
-        return c;
+    public Card clone() {
+        return new CharacterCard(this.id, this.name, this.description, this.imagePath, this.manaNeeded,
+        this.baseAttack, this.baseHp, this.attackUp, this.healthUp, this.level, this.exp, this.type);
     }
 
     public void cardInfo() {

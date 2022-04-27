@@ -6,7 +6,7 @@ id	name	description	imagepath	attack	hp	mana	duration
 105	Yoasobi	Racing Into The Night to meet a Monster	card/image/spell/potion/Yoasobi.png	-3	-2	3	2
 106	Grabkeun	Discount for food purchases in Bandung	card/image/spell/potion/Grabkeun.png	0	2	1	2
 107	Honey Bottle	A bottle of a bee secretion	card/image/spell/potion/Honey Bottle.png	0	4	2	0
-108	Spectral Power	The cursed spectre's power	card/image/spell/potion/Spectral Power.png	4	-3	4	1
+108	Spectral Power	The cursed spectre's power	card/image/spell/potion/Spectral's Power.png	4	-3	4	1
 109	Mother's Prayer	The most effective prayer	card/image/spell/potion/Mother's Prayer.png	-4	3	4	1
 110	Aromatic Ginger Rice	Indonesia's famous beras kencur	card/image/spell/potion/Aromatic Ginger Rice.png	0	1	1	1
 111	GPU Very Good	Powerful computing component	card/image/spell/potion/GPU Very Good.png	1	0	1	0

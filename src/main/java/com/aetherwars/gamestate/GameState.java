@@ -4,43 +4,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameState {
-    private int round;
-    private int currentPlayerId;
-    private Phase currentPhase;
-    private List<Character> hasAttacked;
+    private static int round;
+    private static int currentPlayerId;
+    private static Phase currentPhase;
+    private static List<Character> hasAttacked;
 
-    GameState() {
-        this.round = 1;
-        this.currentPlayerId = 1;
-        this.currentPhase = Phase.DRAW;
-        this.hasAttacked = new ArrayList<Character>();
+    public static void setInitialGameState() {
+        round = 1;
+        currentPlayerId = 1;
+        currentPhase = Phase.DRAW;
+        hasAttacked = new ArrayList<>();
     }
 
-    public void changeTurn() {
-        this.currentPlayerId = (this.currentPlayerId % 2) + 1;
+    public static void changeTurn() {
+        round++;
+        currentPlayerId = (currentPlayerId % 2) + 1;
+        currentPhase = Phase.DRAW;
     }
 
-    public void changeToNextPhase() {
-        if(this.currentPhase == Phase.DRAW) {
-            this.currentPhase = Phase.PLAN;
-        } else if(this.currentPhase == Phase.PLAN) {
-            this.currentPhase = Phase.ATTACK;
-        } else if(this.currentPhase == Phase.ATTACK) {
-            this.currentPhase = Phase.END;
-        } else if(this.currentPhase == Phase.END) {
-            this.currentPhase = Phase.DRAW;
+    public static void changeToNextPhase() {
+        if(currentPhase == Phase.DRAW) {
+            currentPhase = Phase.PLAN;
+        } else if(currentPhase == Phase.PLAN) {
+            currentPhase = Phase.ATTACK;
+        } else if(currentPhase == Phase.ATTACK) {
+            currentPhase = Phase.END;
+        } else if(currentPhase == Phase.END) {
+            currentPhase = Phase.DRAW;
         }
     }
 
-    public void resetAttackedList() {
-        this.hasAttacked = new ArrayList<Character>();
+    public static int getCurrentRound() {
+        return round;
     }
 
-    public void setAttacked(char slot) {
-        this.hasAttacked.add(slot);
+    public static int getCurrentPlayerId() {
+        return currentPlayerId;
     }
 
-    public void hasAttacked(char slot) {
-        // masih gak tau buat apa
+    public static Phase getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public static void resetAttackedList() {
+        hasAttacked = new ArrayList<Character>();
+    }
+
+    public static void setAttacked(char slot) {
+        hasAttacked.add(slot);
+    }
+
+    public static boolean hasAttacked(char slot) {
+        return hasAttacked.contains(slot);
     }
 }

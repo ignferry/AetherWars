@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.CardInfoController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.CardInfoController">
    <children>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="188.0">
          <children>
@@ -91,7 +83,7 @@
                         <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0" />
                      </effect>
                      <font>
-                        <Font size="14.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                   <Label fx:id="descriptionLabel" prefWidth="200.0" textFill="WHITE" wrapText="true">
@@ -101,6 +93,9 @@
                      <effect>
                         <DropShadow height="3.0" radius="1.0" spread="1.0" width="3.0" />
                      </effect>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </Label>
                </children>
             </TextFlow>

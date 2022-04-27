@@ -19,16 +19,11 @@ public class Deck {
 
     public Deck() {
         try {
-            File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
-            File morphCSVFile = new File(getClass().getResource(MORPH_SPELL_CSV_FILE_PATH).toURI());
-            File ptnCSVFile = new File(getClass().getResource(POTION_SPELL_CSV_FILE_PATH).toURI());
-            File swapCSVFile = new File(getClass().getResource(SWAP_SPELL_CSV_FILE_PATH).toURI());
-            cardList.loadCards(characterCSVFile, morphCSVFile, ptnCSVFile, swapCSVFile);
             this.cardDeck = new ArrayList<>();
             Random random = new Random();
             int cardTotal = random.nextInt(21) + 40;
             for (int i = 0; i < cardTotal; i++) {
-                this.cardDeck.add(cardList.getRandomCard());
+                this.cardDeck.add(CardList.getRandomCard());
             }
         } catch (Exception e) {
 

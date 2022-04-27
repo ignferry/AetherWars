@@ -2,9 +2,10 @@ package com.aetherwars.gui;
 
 import com.aetherwars.AetherWars;
 import com.aetherwars.card.*;
+import com.aetherwars.cardlist.CardList;
 import com.aetherwars.event.Event;
 import com.aetherwars.event.EventBroker;
-import com.aetherwars.event.HoverCardEvent;
+import com.aetherwars.event.ClickCardEvent;
 import com.aetherwars.event.Publisher;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -37,6 +39,7 @@ public class HandCardController implements Initializable, Publisher {
     private Card card;
 
     public void setCard(Card c) {
+        EventBroker.addSubscriber(this, EventBroker.getGameController());
         this.card = c;
 
         this.cardImageView.setImage(new Image(AetherWars.class.getResourceAsStream(c.getImagePath())));
@@ -84,12 +87,6 @@ public class HandCardController implements Initializable, Publisher {
     }
 
     private void setAttributeBox(CharacterCard c) {
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setWidth(3);
-        dropShadow.setHeight(3);
-        dropShadow.setRadius(1);
-        dropShadow.setSpread(1);
-
         ImageView atkImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/atk-icon.png")));
         atkImageView.setFitHeight(25);
         atkImageView.setFitWidth(25);
@@ -97,7 +94,7 @@ public class HandCardController implements Initializable, Publisher {
         Label atkLabel = new Label(decimalFormat().format(c.getAttack()));
         atkLabel.getStyleClass().add("text");
         atkLabel.setFont(Font.font(14));
-        atkLabel.setEffect(dropShadow);
+        atkLabel.setEffect(dropShadowText());
         atkLabel.setTextFill(Color.rgb(255,255,255));
 
         ImageView hpImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/hp-icon.png")));
@@ -107,7 +104,7 @@ public class HandCardController implements Initializable, Publisher {
         Label hpLabel = new Label(decimalFormat().format(c.getHp()));
         hpLabel.getStyleClass().add("text");
         hpLabel.setFont(Font.font(14));
-        hpLabel.setEffect(dropShadow);
+        hpLabel.setEffect(dropShadowText());
         hpLabel.setTextFill(Color.rgb(255,255,255));
 
         this.attributeBox.getChildren().add(atkImageView);
@@ -117,19 +114,107 @@ public class HandCardController implements Initializable, Publisher {
     }
 
     private void setAttributeBox(LevelSpellCard c) {
+        Label typeLabel = new Label();
+        if (c.getModifierLvl() == 1) {
+            typeLabel.setText("UP");
+        }
+        else if (c.getModifierLvl() == -1) {
+            typeLabel.setText("DOWN");
+        }
 
+        typeLabel.setFont(Font.font(18));
+        typeLabel.setEffect(dropShadowText());
+        typeLabel.setTextFill(Color.rgb(255,255,255));
+
+        this.attributeBox.getChildren().add(typeLabel);
     }
 
     private void setAttributeBox(MorphSpellCard c) {
+        CharacterCard target = (CharacterCard) CardList.getById(c.getTargetId());
 
+        ImageView targetTypeImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream(c.getImagePath())));
+        targetTypeImageView.setFitHeight(20);
+        targetTypeImageView.setFitWidth(20);
+
+        ImageView atkImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/atk-icon.png")));
+        atkImageView.setFitHeight(20);
+        atkImageView.setFitWidth(20);
+
+        Label atkLabel = new Label(decimalFormat().format(target.getAttack()));
+        atkLabel.getStyleClass().add("text");
+        atkLabel.setFont(Font.font(14));
+        atkLabel.setEffect(dropShadowText());
+        atkLabel.setTextFill(Color.rgb(255,255,255));
+
+        ImageView hpImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/hp-icon.png")));
+        hpImageView.setFitHeight(20);
+        hpImageView.setFitWidth(20);
+
+        Label hpLabel = new Label(decimalFormat().format(target.getHp()));
+        hpLabel.getStyleClass().add("text");
+        hpLabel.setFont(Font.font(14));
+        hpLabel.setEffect(dropShadowText());
+        hpLabel.setTextFill(Color.rgb(255,255,255));
+
+        this.attributeBox.getChildren().add(targetTypeImageView);
+        this.attributeBox.getChildren().add(atkImageView);
+        this.attributeBox.getChildren().add(atkLabel);
+        this.attributeBox.getChildren().add(hpImageView);
+        this.attributeBox.getChildren().add(hpLabel);
     }
 
     private void setAttributeBox(PotionSpellCard c) {
+        ImageView atkImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/atk-icon.png")));
+        atkImageView.setFitHeight(15);
+        atkImageView.setFitWidth(15);
 
+        Label atkLabel = new Label(decimalFormat().format(c.getAttackChangeValue()));
+        atkLabel.getStyleClass().add("text");
+        atkLabel.setFont(Font.font(14));
+        atkLabel.setEffect(dropShadowText());
+        atkLabel.setTextFill(Color.rgb(255,255,255));
+
+        ImageView hpImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/hp-icon.png")));
+        hpImageView.setFitHeight(15);
+        hpImageView.setFitWidth(15);
+
+        Label hpLabel = new Label(decimalFormat().format(c.getHpChangeValue()));
+        hpLabel.getStyleClass().add("text");
+        hpLabel.setFont(Font.font(14));
+        hpLabel.setEffect(dropShadowText());
+        hpLabel.setTextFill(Color.rgb(255,255,255));
+
+        ImageView durImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/duration-icon.png")));
+        durImageView.setFitHeight(15);
+        durImageView.setFitWidth(15);
+
+        Label durLabel = new Label(decimalFormat().format(c.getDuration()));
+        durLabel.getStyleClass().add("text");
+        durLabel.setFont(Font.font(14));
+        durLabel.setEffect(dropShadowText());
+        durLabel.setTextFill(Color.rgb(255,255,255));
+
+        this.attributeBox.getChildren().add(atkImageView);
+        this.attributeBox.getChildren().add(atkLabel);
+        this.attributeBox.getChildren().add(hpImageView);
+        this.attributeBox.getChildren().add(hpLabel);
+        this.attributeBox.getChildren().add(durImageView);
+        this.attributeBox.getChildren().add(durLabel);
     }
 
     private void setAttributeBox(SwapSpellCard c) {
+        ImageView durImageView = new ImageView(new Image(AetherWars.class.getResourceAsStream("gameImages/duration-icon.png")));
+        durImageView.setFitHeight(25);
+        durImageView.setFitWidth(25);
 
+        Label durLabel = new Label(decimalFormat().format(c.getDuration()));
+        durLabel.getStyleClass().add("text");
+        durLabel.setFont(Font.font(16));
+        durLabel.setEffect(dropShadowText());
+        durLabel.setTextFill(Color.rgb(255,255,255));
+
+        this.attributeBox.getChildren().add(durImageView);
+        this.attributeBox.getChildren().add(durLabel);
     }
 
     private static DecimalFormat decimalFormat() {
@@ -137,31 +222,44 @@ public class HandCardController implements Initializable, Publisher {
         return new DecimalFormat("#.#", d);
     }
 
+    private static DropShadow dropShadowText() {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setWidth(3);
+        dropShadow.setHeight(3);
+        dropShadow.setRadius(1);
+        dropShadow.setSpread(1);
+
+        return dropShadow;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    public void onMouseEntered() {
+    @FXML
+    public void onMouseEntered(MouseEvent e) {
         ScaleTransition zoomTransition = new ScaleTransition(Duration.millis(200), this.handCardPane);
         zoomTransition.setFromX(1);
         zoomTransition.setFromY(1);
         zoomTransition.setToX(1.2);
-        zoomTransition.setByY(1.2);
+        zoomTransition.setToY(1.2);
         zoomTransition.play();
-
-        publish(new HoverCardEvent(this.card, false));
     }
 
-    public void onMouseExited() {
+    @FXML
+    public void onMouseExited(MouseEvent e) {
         ScaleTransition zoomTransition = new ScaleTransition(Duration.millis(200), this.handCardPane);
         zoomTransition.setFromX(1.2);
         zoomTransition.setFromY(1.2);
         zoomTransition.setToX(1);
-        zoomTransition.setByY(1);
+        zoomTransition.setToY(1);
         zoomTransition.play();
+    }
 
-        publish(new HoverCardEvent(this.card, false));
+    @FXML
+    public void onMouseClicked(MouseEvent e) {
+        publish(new ClickCardEvent(this.card, false));
     }
 
     @Override

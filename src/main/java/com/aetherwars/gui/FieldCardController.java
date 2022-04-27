@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -68,7 +69,8 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
 
     }
 
-    public void onMouseEntered() {
+    @FXML
+    public void onMouseEntered(MouseEvent e) {
         ScaleTransition zoomTransition = new ScaleTransition(Duration.millis(200), this.fieldCardPane);
         zoomTransition.setFromX(1);
         zoomTransition.setFromY(1);
@@ -76,10 +78,11 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         zoomTransition.setByY(1.2);
         zoomTransition.play();
 
-        publish(new HoverCardEvent(characterCard, true));
+        publish(new ClickCardEvent(characterCard, true));
     }
 
-    public void onMouseExited() {
+    @FXML
+    public void onMouseExited(MouseEvent e) {
         ScaleTransition zoomTransition = new ScaleTransition(Duration.millis(200), this.fieldCardPane);
         zoomTransition.setFromX(1.2);
         zoomTransition.setFromY(1.2);
@@ -87,7 +90,12 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         zoomTransition.setByY(1);
         zoomTransition.play();
 
-        publish(new HoverCardEvent(null, false));
+        publish(new ClickCardEvent(null, false));
+    }
+
+    @FXML
+    public void onMouseClick(MouseEvent e) {
+        publish(new ClickCardEvent(this.characterCard, true));
     }
 
     @Override

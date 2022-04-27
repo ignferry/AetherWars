@@ -9,14 +9,17 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane fx:id="handCardPane" alignment="TOP_RIGHT" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="150.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.HandCardController">
+<StackPane fx:id="handCardPane" alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="150.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.gui.HandCardController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="100.0">
          <effect>
             <DropShadow offsetX="5.0" offsetY="5.0" />
          </effect>
       </Rectangle>
-      <ImageView fx:id="cardImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="cardImageView" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+         <StackPane.margin>
+            <Insets bottom="60.0" top="10.0" />
+         </StackPane.margin></ImageView>
       <Label fx:id="manaCostLabel" alignment="CENTER" styleClass="text" text="1" textAlignment="RIGHT" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="24.0" />
