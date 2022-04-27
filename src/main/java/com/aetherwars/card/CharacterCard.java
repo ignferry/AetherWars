@@ -10,6 +10,7 @@ public class CharacterCard extends Card {
     private int healthUp;
     private int level;
     private int exp = 0;
+    private boolean swapped = false;
     private CharacterType type;
     private List<SwapSpellCard> usedSwap;
     private List<PotionSpellCard> usedPotion;
@@ -52,6 +53,10 @@ public class CharacterCard extends Card {
     public int getExp() {
         return this.exp;
     }
+
+    public boolean getSwap() { return this.swapped; }
+
+    public void setSwap(boolean swapped) { this.swapped = swapped; }
 
     public CharacterType getType() {
         return this.type;

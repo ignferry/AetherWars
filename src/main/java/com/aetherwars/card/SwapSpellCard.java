@@ -11,11 +11,13 @@ public class SwapSpellCard extends Cancelable {
         double newAtk = Math.max(0, target.getHp());
         double newHp = Math.max(0, target.getAttack());
         target.changeAtkHp(newAtk, newHp);
+        target.setSwap(true);
     }
 
     public void cancelSpell(CharacterCard target) {
         // -> NOTE : Kalo dicancel bisa jadi Hp = 0, -> MATI
         this.useSpell(target);
+        target.setSwap(false);
     }
 
     public void addDuration(int dur) {
