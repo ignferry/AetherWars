@@ -11,7 +11,7 @@ public class MorphSpellCard extends SpellCard {
     private CharacterCard newForm;
     // dilengkapi ya, ini dibuat biar bisa bikin cardList
     public MorphSpellCard(int id, String name, String desc, String imagePath, int mana, int targetId) {
-        super(id, name, desc, imagePath, mana, -1);
+        super(id, name, desc, imagePath, mana, -1, "morph");
         this.targetId = targetId;
 
 //        CardList cl = new CardList();

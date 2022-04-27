@@ -31,7 +31,20 @@ public class Board {
     public void putSpellCard(SpellCard s, String slot) {
         if (this.characterExists(slot)) {
             CharacterCard card = this.field.get(slot);
-            s.useSpell(card);
+            // Use Spell Card berbeda untuk yg Cancelable dan non-Cancelable
+            // 1. Non-Cancelable : level dan morph (PERMANEN)
+            if (s.getSpellType()=="level" || s.getSpellType()=="morph") {
+                s.useSpell(card);
+            }
+            // 2. Cancelable : potion dan swap (TEMP)
+            else if (s.getSpellType()=="potion") {
+                PotionSpellCard ss = (PotionSpellCard) s.clone();
+                card.addPotionSpell(ss);
+            }
+            else if (s.getSpellType()=="swap") {
+                SwapSpellCard ss = (SwapSpellCard) s.clone();
+                card.addSwapSpell(ss);
+            }
             this.field.replace(slot, card);
         }
     }

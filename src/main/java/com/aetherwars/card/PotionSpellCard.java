@@ -7,7 +7,7 @@ public class PotionSpellCard extends Cancelable {
     // dilengkapi ya, ini dibuat biar bisa bikin cardList
 
     public PotionSpellCard(int id, String name, String desc, String imagePath, int mana, int duration, int attackChangeValue, int hpChangeValue) {
-        super(id, name, desc, imagePath, mana, duration);
+        super(id, name, desc, imagePath, mana, duration, "potion");
         this.attackChangeValue = attackChangeValue;
         this.hpChangeValue = hpChangeValue;
     }
