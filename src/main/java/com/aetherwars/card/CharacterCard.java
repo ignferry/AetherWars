@@ -10,6 +10,8 @@ public class CharacterCard extends Card {
     private double baseHp;
     private int attackUp;
     private int healthUp;
+    private double currentAttack;
+    private double currentHp;
     private int level;
     private int exp = 0;
     private boolean swapped = false;
@@ -23,6 +25,8 @@ public class CharacterCard extends Card {
         super(id, name, desc, imagePath, manaNeeded);
         this.baseAttack = baseAtk;
         this.baseHp = baseHp;
+        this.currentAttack = this.baseAttack;
+        this.currentHp = this.baseHp;
         this.attackUp = atkUp;
         this.healthUp = healthUp;
         this.level = level;
@@ -58,6 +62,10 @@ public class CharacterCard extends Card {
 
     public boolean getSwap() { return this.swapped; }
 
+    public double getCurrentAttack() {return this.currentAttack;}
+
+    public double getCurrentHp() {return this.currentHp;}
+
     public void setSwap(boolean swapped) { this.swapped = swapped; }
 
     public CharacterType getType() {
@@ -67,6 +75,10 @@ public class CharacterCard extends Card {
     public void setHp(double hp) {
         this.baseHp = hp;
     }
+
+    public void setCurrentHp(double hp) { this.currentHp = hp;}
+
+    public void setCurrentAttack(double attack) {this.currentAttack = attack;}
 
     public void setExp(int exp) {
         this.exp = exp;
@@ -85,7 +97,7 @@ public class CharacterCard extends Card {
             damage = attacker.getAttack() * 2;
         }
         this.attackToPotionSpell(damage);
-        this.baseHp = Math.max(0, this.baseHp-damage);
+        this.currentHp = Math.max(0, this.currentHp-damage);
     }
 
     public void attackToPotionSpell(double damage) {
@@ -183,6 +195,8 @@ public class CharacterCard extends Card {
         if (this.level < 10) {
             this.baseAttack += this.attackUp;
             this.baseHp += this.healthUp;
+            this.currentHp += this.baseHp;
+            this.currentAttack += this.baseAttack;
             this.exp -= (this.level * 2 - 1);
             this.level++;
         }
@@ -192,6 +206,8 @@ public class CharacterCard extends Card {
         if (this.level > 1) {
             this.baseAttack = Math.max(0, this.baseAttack - this.attackUp);
             this.baseHp = Math.max(0, this.baseHp - this.healthUp);
+            this.currentHp = Math.min(this.currentHp, this.baseHp);
+            this.currentAttack = Math.min(this.currentAttack, this.baseAttack);
             this.exp = 0;
             this.level--;
         }
