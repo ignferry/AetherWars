@@ -376,6 +376,10 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
 
     private void startDrawPhase() {
+        manaStackPane.setDisable(true);
+        trashButton.setDisable(true);
+        nextPhaseButton.setDisable(true);
+
         hasDrawn = false;
 
         cardSelectionBox.setVisible(true);
