@@ -25,10 +25,10 @@ public class LevelSpellCard extends SpellCard {
     @Override
     public void useSpell(CharacterCard target) {
         for (int i = 0; i < Math.abs(this.modifierLvl); i++) {
-            if (this.modifierLvl < 0 && target.getLevel() < 10) {
+            if (this.modifierLvl < 0 && target.getLevel() > 1) {
                 target.levelDown();
                 target.setExp(0);       // Udah ada sih di levelDown()
-            } else if (this.modifierLvl > 0 && target.getLevel() > 1) {
+            } else if (this.modifierLvl > 0 && target.getLevel() < 10) {
                 target.levelUp();
                 target.setExp(0);
             }

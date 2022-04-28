@@ -277,9 +277,12 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
     @FXML
     public void onNextPhaseButtonClick(MouseEvent e) {
-        nextPhaseButton.setDisable(true);
         GameState.changeToNextPhase();
         if (GameState.getCurrentPhase() == Phase.DRAW) {
+            manaStackPane.setDisable(true);
+            trashButton.setDisable(true);
+            nextPhaseButton.setDisable(true);
+
             GameState.changeTurn();
             prepareNewTurn();
             startDrawPhase();
@@ -303,7 +306,6 @@ public class GameController implements Initializable, Publisher, Subscriber {
         cardInfoBox.getChildren().clear();
         selectedHandCardController = null;
         selectedOwnFieldCardController = null;
-        nextPhaseButton.setDisable(false);
     }
 
     @FXML
@@ -376,10 +378,6 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
 
     private void startDrawPhase() {
-        manaStackPane.setDisable(true);
-        trashButton.setDisable(true);
-        nextPhaseButton.setDisable(true);
-
         hasDrawn = false;
 
         cardSelectionBox.setVisible(true);
