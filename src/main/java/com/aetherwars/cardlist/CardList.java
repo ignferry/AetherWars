@@ -81,10 +81,10 @@ public class CardList {
                 int attack = Integer.parseInt(row[5]);
                 int health = Integer.parseInt(row[6]);
                 int mana = Integer.parseInt(row[7]);
-                int attackup = Integer.parseInt(row[8]);
-                int healthup = Integer.parseInt(row[9]);
+                int attackUp = Integer.parseInt(row[8]);
+                int healthUp = Integer.parseInt(row[9]);
 
-                CharacterCard newCharacterCard = new CharacterCard(id, name, desc, imagePath, mana, attack, health, attackup, healthup,
+                CharacterCard newCharacterCard = new CharacterCard(id, name, desc, imagePath, mana, attack, health, attackUp, healthUp,
                         1, 0, type);
                 characterCards.add(newCharacterCard);
             }
