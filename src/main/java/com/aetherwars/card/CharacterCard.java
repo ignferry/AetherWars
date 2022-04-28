@@ -198,24 +198,57 @@ public class CharacterCard extends Card {
             this.levelUp();
         }
     }
+    
+    public double[] pureHpAttack() {
+        CharacterCard cc = (CharacterCard) this.clone();
+        for (SwapSpellCard ss : cc.usedSwap) {
+            ss.cancelSpell(this);
+        }
+        for (PotionSpellCard ps : cc.usedPotion) {
+            ps.cancelSpell(this);
+        }
+        double[] ret = {cc.getHp(), cc.getAttack()};
+        return ret;
+    }
+
+    public void restoreHp() {
+        // new currentHp = additionalHp + current baseHp  -> additional dari potionSpell
+        this.currentHp = (this.currentHp - this.pureHpAttack()[0]) + this.baseHp;
+    }
 
     public void levelUp() {
         if (this.level < 10) {
-            this.baseAttack += this.attackUp;
-            this.baseHp += this.healthUp;
+            // Naikin Attack
             this.currentAttack += this.attackUp;
+            this.baseAttack += this.attackUp;
+            // Restore Hp -> Naikin Hp
+            this.restoreHp();
             this.currentHp += this.healthUp;
+            this.baseHp += this.healthUp;
+            // Exp Requirement -> Dibebaskan
             this.exp -= (this.level * 2 - 1);
             this.level++;
+        }
+        else if (this.level == 10) {
+            this.restoreHp();
         }
     }
 
     public void levelDown() {
         if (this.level > 1) {
-            this.baseAttack = Math.max(0, this.baseAttack - this.attackUp);
-            this.baseHp = Math.max(0, this.baseHp - this.healthUp);
-            this.currentHp = Math.min(this.currentHp, this.baseHp);
-            this.currentAttack = Math.min(this.currentAttack, this.baseAttack);
+            // Cari pure attribute, bisa jadi sama dengan baseAtribut lama atau lebih kecil
+            double[] pureAttribute = this.pureHpAttack();
+            // Ubah attack
+            double additionalAttack = this.currentAttack - pureAttribute[1];
+            this.baseAttack -= this.attackUp;
+            this.currentAttack = Math.min(this.baseAttack, pureAttribute[1]);
+            this.currentAttack += additionalAttack;
+            // Ubah Hp
+            double additionalHp = this.currentHp - pureAttribute[0];
+            this.baseHp -= this.healthUp;
+            this.currentHp = Math.min(this.baseHp, pureAttribute[0]);
+            this.currentHp += additionalHp;
+
             this.exp = 0;
             this.level--;
         }
