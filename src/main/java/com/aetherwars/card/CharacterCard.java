@@ -1,5 +1,7 @@
 package com.aetherwars.card;
 
+import com.aetherwars.player.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,19 @@ public class CharacterCard extends Card {
 
     public boolean isDie(){
         return this.baseHp <= 0;
+    }
+
+    public void receiveAttack(CharacterCard attacker){
+        if((this.getType() == CharacterType.NETHER && attacker.getType() == CharacterType.OVERWORLD) || (this.getType() == CharacterType.OVERWORLD && attacker.getType() == CharacterType.END) || (this.getType() == CharacterType.END && attacker.getType() == CharacterType.NETHER) ){
+            this.baseHp -= attacker.getAttack() * 0.5;
+        }
+        else {
+            this.baseHp -= attacker.getAttack() * 2;
+        }
+    }
+
+    public void directAttack(Player p){
+        p.reduceHp((int)this.getAttack());
     }
 
     public void addSwapSpell(SwapSpellCard swap) {
