@@ -2,7 +2,7 @@ package com.aetherwars.card;
 
 public class SwapSpellCard extends Cancelable {
     // dilengkapi ya, ini dibuat biar bisa bikin cardList
-    public SwapSpellCard(int id, String name, String desc, String imagePath, int mana, int duration) {
+    public SwapSpellCard(int id, String name, String desc, String imagePath, int mana, double duration) {
         super(id, name, desc, imagePath, mana, duration, "swap");
     }
 
@@ -21,7 +21,7 @@ public class SwapSpellCard extends Cancelable {
         target.setSwap(false);
     }
 
-    public void addDuration(int dur) {
+    public void addDuration(double dur) {
         this.duration += dur;
     }
 

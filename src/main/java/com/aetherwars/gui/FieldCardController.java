@@ -3,6 +3,7 @@ package com.aetherwars.gui;
 import com.aetherwars.AetherWars;
 import com.aetherwars.card.CharacterCard;
 import com.aetherwars.card.CharacterType;
+import com.aetherwars.card.SpellCard;
 import com.aetherwars.event.*;
 import com.aetherwars.gamestate.GameState;
 import javafx.animation.ScaleTransition;
@@ -116,6 +117,10 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         if (event instanceof UseSpellEvent) {
             UseSpellEvent useSpellEvent = (UseSpellEvent) event;
             if (useSpellEvent.getFieldCardController() == this) {
+                SpellCard spellCard = useSpellEvent.getSpellCard();
+                if (!useSpellEvent.getFieldCardController().getSlot().contains(Integer.toString(GameState.getCurrentPlayerId()))) {
+                    spellCard.setDuration(spellCard.getDuration() - 0.5);
+                }
                 useSpellEvent.getSpellCard().useSpell(this.characterCard);
                 setCardAttributes(this.characterCard);
             }
@@ -134,7 +139,7 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
                 setCardAttributes(this.characterCard);
             }
         }
-        if (event instanceof ChangeTurnEvent && this.slot.contains(Integer.toString(GameState.getCurrentPlayerId()))) {
+        if (event instanceof ChangeTurnEvent) {
             System.out.println("Duration of " + this.slot + " reduced");
             this.characterCard.reduceDuration();
             setCardAttributes(this.characterCard);

@@ -2,20 +2,20 @@ package com.aetherwars.card;
 
 abstract public class SpellCard extends Card {
     // dilengkapi ya, ini dibuat biar bisa bikin cardList
-    protected int duration;
+    protected double duration;
     protected String spellType;
 
-    SpellCard(int id, String name, String desc, String imagePath, int mana, int duration, String spellType) {
+    SpellCard(int id, String name, String desc, String imagePath, int mana, double duration, String spellType) {
         super(id, name, desc, imagePath, mana);
         this.duration = duration;
         this.spellType = spellType;
     }
 
-    public int getDuration() {
+    public double getDuration() {
         return this.duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(double duration) {
         this.duration = duration;
     }
 

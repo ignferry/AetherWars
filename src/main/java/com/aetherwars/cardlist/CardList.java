@@ -7,6 +7,7 @@ import com.aetherwars.util.CSVReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.*;
 
 public class CardList {
@@ -123,7 +124,7 @@ public class CardList {
                 int attack = Integer.parseInt(row[4]);
                 int hp = Integer.parseInt(row[5]);
                 int mana = Integer.parseInt(row[6]);
-                int duration = Integer.parseInt(row[7]);
+                double duration = Double.parseDouble(row[7]);
 
                 PotionSpellCard newPotionSpellCard = new PotionSpellCard(id, name, desc, imagePath,
                         mana, duration, attack, hp);
@@ -142,7 +143,7 @@ public class CardList {
                 String name = row[1];
                 String desc = row[2];
                 String imagePath = row[3];
-                int duration = Integer.parseInt(row[4]);
+                double duration = Double.parseDouble(row[4]);
                 int mana = Integer.parseInt(row[5]);
 
                 SwapSpellCard newSwapSpellCard = new SwapSpellCard(id, name, desc, imagePath, mana, duration);
@@ -162,7 +163,7 @@ public class CardList {
                 String desc = row[2];
                 String imagePath = row[3];
                 int mana = Integer.parseInt(row[4]);
-                int duration = Integer.parseInt(row[5]);
+                double duration = Double.parseDouble(row[5]);
                 int lvlModifier = Integer.parseInt(row[6]);
 
                 LevelSpellCard newLevelCard = new LevelSpellCard(id, name, desc, imagePath, mana, lvlModifier);

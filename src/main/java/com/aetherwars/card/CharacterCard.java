@@ -167,7 +167,7 @@ public class CharacterCard extends Card {
 
         for (SwapSpellCard swap : usedSwap) {
             if (swap.getDuration() != 0) {
-                swap.setDuration(swap.getDuration() - 1);
+                swap.setDuration(swap.getDuration() - 0.5);
             }
         }
 
@@ -181,7 +181,7 @@ public class CharacterCard extends Card {
 
         for (PotionSpellCard potion : usedPotion) {
             if (potion.getDuration() != 0) {
-                potion.setDuration(potion.getDuration() - 1);
+                potion.setDuration(potion.getDuration() - 0.5);
             }
         }
 
