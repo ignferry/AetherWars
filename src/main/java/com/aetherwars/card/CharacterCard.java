@@ -158,33 +158,33 @@ public class CharacterCard extends Card {
 
     public void reduceDuration() {
         for (SwapSpellCard swap : usedSwap) {
-            if (swap.getDuration() == 0) {
-                swap.cancelSpell(this);
-            }
-        }
-
-        usedSwap.removeIf(swapSpellCard -> swapSpellCard.getDuration() == 0);
-
-        for (SwapSpellCard swap : usedSwap) {
-            if (swap.getDuration() != 0) {
+            if (swap.getDuration() > 0) {
                 swap.setDuration(swap.getDuration() - 0.5);
             }
         }
 
-        for (PotionSpellCard potion : usedPotion) {
-            if (potion.getDuration() == 0) {
-                potion.cancelSpell(this);
+        for (SwapSpellCard swap : usedSwap) {
+            if (swap.getDuration() <= 0) {
+                swap.cancelSpell(this);
             }
         }
 
-        usedPotion.removeIf(potionSpellCard -> potionSpellCard.getDuration() == 0);
+        usedSwap.removeIf(swapSpellCard -> swapSpellCard.getDuration() <= 0);
+
 
         for (PotionSpellCard potion : usedPotion) {
-            if (potion.getDuration() != 0) {
+            if (potion.getDuration() > 0) {
                 potion.setDuration(potion.getDuration() - 0.5);
             }
         }
 
+        for (PotionSpellCard potion : usedPotion) {
+            if (potion.getDuration() <= 0) {
+                potion.cancelSpell(this);
+            }
+        }
+
+        usedPotion.removeIf(potionSpellCard -> potionSpellCard.getDuration() <= 0);
     }
 
     public Boolean isExpMax() {
@@ -202,8 +202,8 @@ public class CharacterCard extends Card {
         if (this.level < 10) {
             this.baseAttack += this.attackUp;
             this.baseHp += this.healthUp;
-            this.currentAttack += this.baseAttack;
-            this.currentHp += this.baseHp;
+            this.currentAttack += this.attackUp;
+            this.currentHp += this.healthUp;
             this.exp -= (this.level * 2 - 1);
             this.level++;
         }
