@@ -89,13 +89,14 @@ public class CharacterCard extends Card {
     }
 
     public void receiveAttack(CharacterCard attacker){
-        double damage = 0;
+        double damage = attacker.getAttack();
         if((this.getType() == CharacterType.NETHER && attacker.getType() == CharacterType.OVERWORLD) || (this.getType() == CharacterType.OVERWORLD && attacker.getType() == CharacterType.END) || (this.getType() == CharacterType.END && attacker.getType() == CharacterType.NETHER) ){
-            damage = attacker.getAttack() * 0.5;
+            damage *= 0.5;
         }
-        else {
-            damage = attacker.getAttack() * 2;
+        else if ((attacker.getType() == CharacterType.NETHER && this.getType() == CharacterType.OVERWORLD) || (attacker.getType() == CharacterType.OVERWORLD && this.getType() == CharacterType.END) || (attacker.getType() == CharacterType.END && this.getType() == CharacterType.NETHER)) {
+            damage *= 2;
         }
+
         this.attackToPotionSpell(damage);
         this.currentHp = Math.max(0, this.currentHp-damage);
     }
