@@ -45,11 +45,11 @@ public class CharacterCard extends Card {
     }
 
     public double getHp() {
-        return this.baseHp;
+        return this.currentHp;
     }
 
     public double getAttack() {
-        return this.baseAttack;
+        return this.currentAttack;
     }
 
     public int getLevel() {
@@ -62,9 +62,9 @@ public class CharacterCard extends Card {
 
     public boolean getSwap() { return this.swapped; }
 
-    public double getCurrentAttack() {return this.currentAttack;}
+    public double getBaseAttack() {return this.baseAttack;}
 
-    public double getCurrentHp() {return this.currentHp;}
+    public double getBaseHp() {return this.baseHp;}
 
     public void setSwap(boolean swapped) { this.swapped = swapped; }
 
@@ -76,9 +76,9 @@ public class CharacterCard extends Card {
         this.baseHp = hp;
     }
 
-    public void setCurrentHp(double hp) { this.currentHp = hp;}
+    public void setBaseHp(double hp) { this.baseHp = hp; }
 
-    public void setCurrentAttack(double attack) {this.currentAttack = attack;}
+    public void setBaseAttack(double attack) {this.baseAttack = attack; }
 
     public void setExp(int exp) {
         this.exp = exp;
@@ -202,8 +202,8 @@ public class CharacterCard extends Card {
         if (this.level < 10) {
             this.baseAttack += this.attackUp;
             this.baseHp += this.healthUp;
-            this.currentHp += this.baseHp;
             this.currentAttack += this.baseAttack;
+            this.currentHp += this.baseHp;
             this.exp -= (this.level * 2 - 1);
             this.level++;
         }
@@ -220,9 +220,9 @@ public class CharacterCard extends Card {
         }
     }
 
-    public void changeAtkHp(double newAtk, double newHp) {
-        this.baseAttack = newAtk;
-        this.baseHp = newHp;
+    public void changeCurrAtkHp(double newAtk, double newHp) {
+        this.currentAttack = newAtk;
+        this.currentHp = newHp;
     }
 
     public void changeAll(CharacterCard other) {
@@ -231,7 +231,9 @@ public class CharacterCard extends Card {
         this.description = other.description;
         this.imagePath = other.imagePath;
         this.manaNeeded = other.manaNeeded;
-        this.changeAtkHp(other.baseAttack, other.baseHp);
+        this.changeCurrAtkHp(other.currentAttack, other.currentHp);
+        this.baseAttack = other.baseAttack;
+        this.baseHp = other.baseHp;
         this.attackUp = other.attackUp;
         this.healthUp = other.healthUp;
         this.level = 1;
@@ -239,6 +241,7 @@ public class CharacterCard extends Card {
         this.type = other.type;
         this.usedPotion = new ArrayList<PotionSpellCard>();
         this.usedSwap = new ArrayList<SwapSpellCard>();
+        this.swapped = false;
     }
 
     public Card clone() {

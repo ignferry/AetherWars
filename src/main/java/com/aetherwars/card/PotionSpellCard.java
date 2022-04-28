@@ -27,7 +27,7 @@ public class PotionSpellCard extends Cancelable {
     public void useSpell(CharacterCard target) {
         double newAtk = Math.max(0, target.getAttack() + this.attackChangeValue);
         double newHp = Math.max(0, target.getHp() + this.hpChangeValue);
-        target.changeAtkHp(newAtk, newHp);
+        target.changeCurrAtkHp(newAtk, newHp);
         target.addPotionSpell(this);
         if (target.getSwap()) {
             this.applyOnSwap = true;
@@ -49,7 +49,7 @@ public class PotionSpellCard extends Cancelable {
             newAtk = Math.max(0, target.getAttack() - this.hpChangeValue);
             newHp = Math.max(0, target.getHp() - this.attackChangeValue);
         }
-        target.changeAtkHp(newAtk, newHp);
+        target.changeCurrAtkHp(newAtk, newHp);
     }
 
     @Override
