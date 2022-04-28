@@ -246,8 +246,18 @@ public class CharacterCard extends Card {
     }
 
     public Card clone() {
-        return new CharacterCard(this.id, this.name, this.description, this.imagePath, this.manaNeeded,
-        this.baseAttack, this.baseHp, this.attackUp, this.healthUp, this.level, this.exp, this.type);
+        CharacterCard cc = new CharacterCard(this.id, this.name, this.description, this.imagePath, this.manaNeeded,
+                this.baseAttack, this.baseHp, this.attackUp, this.healthUp, this.level, this.exp, this.type);
+        cc.currentAttack = this.currentAttack;
+        cc.currentHp = this.currentHp;
+        cc.swapped = this.swapped;
+        for (SwapSpellCard s : this.usedSwap) {
+            cc.usedSwap.add(s);
+        }
+        for (PotionSpellCard s : this.usedPotion) {
+            cc.usedPotion.add(s);
+        }
+        return cc;
     }
 
     public void cardInfo() {
