@@ -84,40 +84,39 @@ public class CharacterCard extends Card {
         else {
             damage = attacker.getAttack() * 2;
         }
-        double damageOnCharacter = this.attackToPotionSpell(damage);
-        this.baseHp = Math.max(0, this.baseHp-damageOnCharacter);
+        this.attackToPotionSpell(damage);
+        this.baseHp = Math.max(0, this.baseHp-damage);
     }
 
-    public double attackToPotionSpell(double damage) {
-        double newDamage = damage;
+    public void attackToPotionSpell(double damage) {
         double remain;
         for (PotionSpellCard p : this.usedPotion) {
-            if (newDamage > 0) {
+            if (damage > 0) {
                 // 1.Pemakaian potion tidak dipengaruhi wrap
                 if ((!this.swapped && !p.getApplyOnSwap()) || (this.swapped && p.getApplyOnSwap())) {
                     if (p.getHpChangeValue() > 0) {
-                        remain = p.getHpChangeValue() - newDamage;
+                        remain = p.getHpChangeValue() - damage;
                         if (remain > 0) {
                             p.setHpChangeValue(remain);
-                            newDamage = 0;
+                            damage = 0;
                         }
                         else {
                             p.setHpChangeValue(0);
-                            newDamage = Math.abs(remain);
+                            damage = Math.abs(remain);
                         }
                     }
                 }
                 // 2.Pemakaian potion dipengaruhi wrap
                 else if ((this.swapped && !p.getApplyOnSwap()) || (!this.swapped && p.getApplyOnSwap())) {
                     if (p.getAttackChangeValue() > 0) {
-                        remain = p.getAttackChangeValue() - newDamage;
+                        remain = p.getAttackChangeValue() - damage;
                         if (remain > 0) {
                             p.setAttackChangeValue(remain);
-                            newDamage = 0;
+                            damage = 0;
                         }
                         else {
                             p.setAttackChangeValue(0);
-                            newDamage = Math.abs(remain);
+                            damage = Math.abs(remain);
                         }
                     }
                 }
@@ -126,7 +125,6 @@ public class CharacterCard extends Card {
                 break;
             }
         }
-        return newDamage;
     }
 
     public void directAttack(Player p){
