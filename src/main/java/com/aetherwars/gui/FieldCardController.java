@@ -4,6 +4,7 @@ import com.aetherwars.AetherWars;
 import com.aetherwars.card.CharacterCard;
 import com.aetherwars.card.CharacterType;
 import com.aetherwars.event.*;
+import com.aetherwars.gamestate.GameState;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -120,9 +120,9 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
                 setCardAttributes(this.characterCard);
             }
         }
-        if (event instanceof AddExpWithManaEvent) {
-            AddExpWithManaEvent addExpWithManaEvent = (AddExpWithManaEvent) event;
-            if (addExpWithManaEvent.getFieldCardController() == this) {
+        if (event instanceof AddExpEvent) {
+            AddExpEvent addExpEvent = (AddExpEvent) event;
+            if (addExpEvent.getFieldCardController() == this) {
                 this.characterCard.addExp(1);
                 setCardAttributes(this.characterCard);
             }
@@ -130,8 +130,14 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         if (event instanceof AttackEvent) {
             AttackEvent attackEvent = (AttackEvent) event;
             if (attackEvent.getDefender() == this) {
-                // TODO: receive damage dari attacker
+                this.characterCard.receiveAttack(attackEvent.getAttacker());
+                setCardAttributes(this.characterCard);
             }
+        }
+        if (event instanceof ChangeTurnEvent && this.slot.contains(Integer.toString(GameState.getCurrentPlayerId()))) {
+            System.out.println("Duration of " + this.slot + " reduced");
+            this.characterCard.reduceDuration();
+            setCardAttributes(this.characterCard);
         }
     }
 

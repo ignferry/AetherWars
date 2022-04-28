@@ -146,6 +146,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
             setCardInfo(card, true);
 
             if (GameState.getCurrentPhase() == Phase.PLAN || GameState.getCurrentPhase() == Phase.ATTACK) {
+                // Set selectedOwnFieldCard
                 if (isOwnFieldSlot(clickFieldCardEvent.getFieldCardController().getSlot())) {
                     selectedOwnFieldCardController = clickFieldCardEvent.getFieldCardController();
                     if (GameState.getCurrentPhase() == Phase.PLAN) {
@@ -162,6 +163,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                     trashButton.setDisable(true);
                 }
 
+                // Menggunakan spell card
                 if (selectedHandCardController != null) {
                     if (selectedHandCardController.getCard() instanceof SpellCard) {
                         int manacost;
@@ -183,6 +185,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                             setCurrentManaBar();
 
                             if (card.isDie()) {
+                                this.occupiedSlots.remove(clickFieldCardEvent.getFieldCardController().getSlot());
                                 publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
                                 EventBroker.removeObject(clickFieldCardEvent.getFieldCardController());
                             }
@@ -191,23 +194,38 @@ public class GameController implements Initializable, Publisher, Subscriber {
                         }
                     }
                 }
+                // Attack
                 else if (selectedOwnFieldCardController != null
                             && !isOwnFieldSlot(clickFieldCardEvent.getFieldCardController().getSlot())
                             && GameState.getCurrentPhase() == Phase.ATTACK) {
-                    publish(new AttackEvent(selectedOwnFieldCardController, card));
-                    publish(new AttackEvent(clickFieldCardEvent.getFieldCardController(), selectedOwnFieldCardController.getCharacterCard()));
+                    if (!hasAttackedSlots.contains(selectedOwnFieldCardController.getSlot())) {
+                        publish(new AttackEvent(selectedOwnFieldCardController, card));
+                        publish(new AttackEvent(clickFieldCardEvent.getFieldCardController(), selectedOwnFieldCardController.getCharacterCard()));
 
-                    if (card.isDie()) {
-                        publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
-                        EventBroker.removeObject(clickFieldCardEvent.getFieldCardController());
+                        this.hasAttackedSlots.add(selectedOwnFieldCardController.getSlot());
+
+                        if (card.isDie() && !selectedOwnFieldCardController.getCharacterCard().isDie()) {
+                            publish(new AddExpEvent(selectedOwnFieldCardController, card.getLevel()));
+                        }
+
+                        if (selectedOwnFieldCardController.getCharacterCard().isDie() && !card.isDie()) {
+                            publish(new AddExpEvent(clickFieldCardEvent.getFieldCardController(), selectedOwnFieldCardController.getCharacterCard().getLevel()));
+                        }
+
+                        if (card.isDie()) {
+                            this.occupiedSlots.remove(clickFieldCardEvent.getFieldCardController().getSlot());
+                            publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
+                            EventBroker.removeObject(clickFieldCardEvent.getFieldCardController());
+                        }
+
+                        if (selectedOwnFieldCardController.getCharacterCard().isDie()) {
+                            this.occupiedSlots.remove(selectedOwnFieldCardController.getSlot());
+                            publish(new RemoveFromFieldEvent(selectedOwnFieldCardController));
+                            EventBroker.removeObject(selectedOwnFieldCardController);
+                        }
+
+                        selectedOwnFieldCardController = null;
                     }
-
-                    if (selectedOwnFieldCardController.getCharacterCard().isDie()) {
-                        publish(new RemoveFromFieldEvent(selectedOwnFieldCardController));
-                        EventBroker.removeObject(selectedOwnFieldCardController);
-                    }
-
-                    selectedOwnFieldCardController = null;
                 }
             }
 
@@ -226,6 +244,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                 selectedHandCardController = null;
             }
             if (selectedOwnFieldCardController != null) {
+                this.occupiedSlots.remove(selectedOwnFieldCardController.getSlot());
                 publish(new RemoveFromFieldEvent(selectedOwnFieldCardController));
                 EventBroker.removeObject(selectedOwnFieldCardController);
                 selectedOwnFieldCardController = null;
@@ -240,7 +259,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                 && selectedOwnFieldCardController != null
                 && getCurrentPlayer().getMana() > 0) {
             // TODO: Cek sudah level exp max atau belum
-            publish(new AddExpWithManaEvent(selectedOwnFieldCardController));
+            publish(new AddExpEvent(selectedOwnFieldCardController, 1));
             getCurrentPlayer().reduceMana(1);
             setCurrentManaBar();
 
@@ -305,6 +324,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                                 ((StackPane) n).getChildren().add(fieldCard);
                             }
                         }
+                        this.occupiedSlots.add(slotId);
 
                         // Mengupdate mana player
                         getCurrentPlayer().reduceMana(selectedHandCardController.getCard().getManaNeeded());
@@ -315,6 +335,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
                         getCurrentPlayer().getHand().remove(selectedHandCardController.getCard());
                         EventBroker.removeObject(selectedHandCardController);
                         selectedHandCardController = null;
+                        cardInfoBox.getChildren().clear();
                     }
                     catch (Exception ex) {
                         ex.printStackTrace();
@@ -369,6 +390,9 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
         this.drawnCardControllers = new ArrayList<>();
         this.handCardControllers = new ArrayList<>();
+        this.hasAttackedSlots = new ArrayList<>();
+
+        publish(new ChangeTurnEvent());
 
         setHand();
     }
