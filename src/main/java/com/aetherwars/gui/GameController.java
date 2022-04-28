@@ -9,7 +9,6 @@ import com.aetherwars.deck.Deck;
 import com.aetherwars.event.*;
 import com.aetherwars.gamestate.GameState;
 import com.aetherwars.gamestate.Phase;
-import com.aetherwars.model.Character;
 import com.aetherwars.player.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,6 +64,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
     // Plan phase and attack phase attributes
     private Map<String, FieldCardController> fieldCardControllers;
     private FieldCardController selectedOwnFieldCardController;
+    private List<String> occupiedSlots;
+    private List<String> hasAttackedSlots;
 
     public GameController(Player player1, Player player2) {
         this.player1 = player1;
@@ -79,6 +80,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
         this.drawnCardControllers = new ArrayList<>();
         this.handCardControllers = new ArrayList<>();
         this.fieldCardControllers = new HashMap<>();
+        this.occupiedSlots = new ArrayList<>();
+        this.hasAttackedSlots = new ArrayList<>();
 
         setHand();
         setManaGrid();
@@ -218,6 +221,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
             System.out.println(selectedHandCardController);
             if (selectedHandCardController != null) {
                 publish(new RemoveHandCardEvent(selectedHandCardController));
+                getCurrentPlayer().getHand().remove(selectedHandCardController.getCard());
                 EventBroker.removeObject(selectedHandCardController);
                 selectedHandCardController = null;
             }
@@ -308,6 +312,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
                         // Menghapus kartu dari hand
                         publish(new RemoveHandCardEvent(selectedHandCardController));
+                        getCurrentPlayer().getHand().remove(selectedHandCardController.getCard());
                         EventBroker.removeObject(selectedHandCardController);
                         selectedHandCardController = null;
                     }
