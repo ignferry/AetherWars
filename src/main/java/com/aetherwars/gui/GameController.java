@@ -216,10 +216,6 @@ public class GameController implements Initializable, Publisher, Subscriber {
                             publish(new AddExpEvent(selectedOwnFieldCardController, card.getLevel()));
                         }
 
-                        if (selectedOwnFieldCardController.getCharacterCard().isDie() && !card.isDie()) {
-                            publish(new AddExpEvent(clickFieldCardEvent.getFieldCardController(), selectedOwnFieldCardController.getCharacterCard().getLevel()));
-                        }
-
                         if (card.isDie()) {
                             this.occupiedSlots.remove(clickFieldCardEvent.getFieldCardController().getSlot());
                             publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
