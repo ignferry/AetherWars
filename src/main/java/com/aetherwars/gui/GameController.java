@@ -524,6 +524,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
         winLabel.getStyleClass().add("text");
         winLabel.setFont(Font.font(56));
         winLabel.setTextFill(Color.rgb(255,255,255));
+
+        cardSelectionBox.getChildren().add(winLabel);
     }
 
     private Player getCurrentPlayer() {
