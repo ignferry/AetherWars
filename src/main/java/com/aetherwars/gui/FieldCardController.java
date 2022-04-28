@@ -117,10 +117,6 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
         if (event instanceof UseSpellEvent) {
             UseSpellEvent useSpellEvent = (UseSpellEvent) event;
             if (useSpellEvent.getFieldCardController() == this) {
-                SpellCard spellCard = useSpellEvent.getSpellCard();
-                if (useSpellEvent.getFieldCardController().getSlot().contains(Integer.toString(GameState.getCurrentPlayerId()))) {
-                    spellCard.setDuration(spellCard.getDuration() - 0.5);
-                }
                 useSpellEvent.getSpellCard().useSpell(this.characterCard);
                 setCardAttributes(this.characterCard);
             }
