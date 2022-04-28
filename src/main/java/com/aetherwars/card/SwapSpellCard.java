@@ -10,7 +10,7 @@ public class SwapSpellCard extends Cancelable {
     public void useSpell(CharacterCard target) {
         double newAtk = Math.max(0, target.getHp());
         double newHp = Math.max(0, target.getAttack());
-        target.changeAtkHp(newAtk, newHp);
+        target.changeCurrAtkHp(newAtk, newHp);
         target.addSwapSpell(this);
         target.setSwap(true);
     }

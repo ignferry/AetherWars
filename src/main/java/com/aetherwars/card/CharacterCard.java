@@ -85,7 +85,7 @@ public class CharacterCard extends Card {
     }
 
     public boolean isDie(){
-        return this.baseHp <= 0;
+        return this.currentHp <= 0;
     }
 
     public void receiveAttack(CharacterCard attacker){
