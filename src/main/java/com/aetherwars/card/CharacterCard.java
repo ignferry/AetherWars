@@ -146,7 +146,6 @@ public class CharacterCard extends Card {
     public void addSwapSpell(SwapSpellCard swap) {
         if (this.usedSwap.size() == 0) {
             this.usedSwap.add(swap);
-            swap.useSpell(this);
         }
         else {
             this.usedSwap.get(0).addDuration(swap.getDuration());
@@ -155,16 +154,19 @@ public class CharacterCard extends Card {
 
     public void addPotionSpell(PotionSpellCard potion) {
         this.usedPotion.add(potion);
-        potion.useSpell(this);
     }
 
     public void reduceDuration() {
         for (SwapSpellCard swap : usedSwap) {
             if (swap.getDuration() == 0) {
                 swap.cancelSpell(this);
-                usedSwap.remove(swap);
             }
-            else {
+        }
+
+        usedSwap.removeIf(swapSpellCard -> swapSpellCard.getDuration() == 0);
+
+        for (SwapSpellCard swap : usedSwap) {
+            if (swap.getDuration() != 0) {
                 swap.setDuration(swap.getDuration() - 1);
             }
         }
@@ -172,12 +174,17 @@ public class CharacterCard extends Card {
         for (PotionSpellCard potion : usedPotion) {
             if (potion.getDuration() == 0) {
                 potion.cancelSpell(this);
-                usedPotion.remove(potion);
-            }
-            else {
-                potion.setDuration(potion.getDuration()-1);
             }
         }
+
+        usedPotion.removeIf(potionSpellCard -> potionSpellCard.getDuration() == 0);
+
+        for (PotionSpellCard potion : usedPotion) {
+            if (potion.getDuration() != 0) {
+                potion.setDuration(potion.getDuration() - 1);
+            }
+        }
+
     }
 
     public Boolean isExpMax() {
