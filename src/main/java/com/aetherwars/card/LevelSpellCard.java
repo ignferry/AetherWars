@@ -4,7 +4,7 @@ public class LevelSpellCard extends SpellCard {
     private int modifierLvl;
     // dilengkapi ya, ini dibuat biar bisa bikin cardList
 
-    LevelSpellCard(int id, String name, String desc, String imagePath, int mana, int modifierLvl) {
+    public LevelSpellCard(int id, String name, String desc, String imagePath, int mana, int modifierLvl) {
         super(id, name, desc, imagePath, mana, -1, "level");
         this.modifierLvl = modifierLvl;
     }

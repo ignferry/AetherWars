@@ -14,48 +14,27 @@ public class CardList {
     private static final String MORPH_SPELL_CSV_FILE_PATH = "card/data/spell_morph.csv";
     private static final String POTION_SPELL_CSV_FILE_PATH = "card/data/spell_ptn.csv";
     private static final String SWAP_SPELL_CSV_FILE_PATH = "card/data/spell_swap.csv";
+    private static final String LEVEL_SPELL_CSV_FILE_PATH = "card/data/spell_lvl.csv";
 
     private static Map<Integer, Card> cards = new HashMap<>();
     private static List<CharacterCard> characterCards = new ArrayList<>();
     private static List<MorphSpellCard> morphSpellCards = new ArrayList<>();
     private static List<PotionSpellCard> potionSpellCards = new ArrayList<>();
     private static List<SwapSpellCard> swapSpellCards = new ArrayList<>();
-
-    public CardList() {
-    }
-
-//    public static void loadCards() throws IOException, URISyntaxException {
-//        loadCharacterCards(characterCSVFile);
-//        loadMorphSpellCards(morphCSVFile);
-//        loadPotionSpellCards(ptnCSVFile);
-//        loadSwapSpellCards(swapCSVFile);
-//        if(cards.isEmpty()) {
-//            for (Card card: characterCards) {
-//                cards.put(card.getId(), card);
-//            }
-//            for (Card card: morphSpellCards) {
-//                cards.put(card.getId(), card);
-//            }
-//            for (Card card: potionSpellCards) {
-//                cards.put(card.getId(), card);
-//            }
-//            for (Card card: swapSpellCards) {
-//                cards.put(card.getId(), card);
-//            }
-//        }
-//    }
+    private static List<LevelSpellCard> levelSpellCards = new ArrayList<>();
 
     public static void load() throws IOException, URISyntaxException {
         File characterFile = new File(AetherWars.class.getResource(CHARACTER_CSV_FILE_PATH).toURI());
         File morphFile = new File(AetherWars.class.getResource(MORPH_SPELL_CSV_FILE_PATH).toURI());
         File ptnFile = new File(AetherWars.class.getResource(POTION_SPELL_CSV_FILE_PATH).toURI());
         File swapFile = new File(AetherWars.class.getResource(SWAP_SPELL_CSV_FILE_PATH).toURI());
+        File levelFile = new File(AetherWars.class.getResource(LEVEL_SPELL_CSV_FILE_PATH).toURI());
 
         loadCharacterCards(characterFile);
         loadMorphSpellCards(morphFile);
         loadPotionSpellCards(ptnFile);
         loadSwapSpellCards(swapFile);
-        // loadLevelSpellCards(); SOON
+        loadLevelSpellCards(levelFile);
 
         if(cards.isEmpty()) {
             // memasukkan semua kartu ke dalam HashMap cards
@@ -71,27 +50,7 @@ public class CardList {
             for (Card card : swapSpellCards) {
                 cards.put(card.getId(), card);
             }
-        }
-    }
-
-    public static void loadCards(File characterCSVFile, File morphCSVFile, File ptnCSVFile, File swapCSVFile) throws IOException, URISyntaxException {
-        loadCharacterCards(characterCSVFile);
-        loadMorphSpellCards(morphCSVFile);
-        loadPotionSpellCards(ptnCSVFile);
-        loadSwapSpellCards(swapCSVFile);
-        // loadLevelSpellCards(); SOON
-        if(cards.isEmpty()) {
-            // memasukkan semua kartu ke dalam HashMap cards
-            for (Card card : characterCards) {
-                cards.put(card.getId(), card);
-            }
-            for (Card card : morphSpellCards) {
-                cards.put(card.getId(), card);
-            }
-            for (Card card : potionSpellCards) {
-                cards.put(card.getId(), card);
-            }
-            for (Card card : swapSpellCards) {
+            for (Card card : levelSpellCards) {
                 cards.put(card.getId(), card);
             }
         }
@@ -188,6 +147,26 @@ public class CardList {
 
                 SwapSpellCard newSwapSpellCard = new SwapSpellCard(id, name, desc, imagePath, mana, duration);
                 swapSpellCards.add(newSwapSpellCard);
+            }
+        }
+    }
+
+    public static void loadLevelSpellCards(File levelCSVFile) throws IOException, URISyntaxException {
+        if(levelSpellCards.isEmpty()) {
+            CSVReader characterReader = new CSVReader(levelCSVFile, "\t");
+            characterReader.setSkipHeader(true);
+            List<String[]> characterRows = characterReader.read();
+            for (String[] row : characterRows) {
+                int id = Integer.parseInt(row[0]);
+                String name = row[1];
+                String desc = row[2];
+                String imagePath = row[3];
+                int mana = Integer.parseInt(row[4]);
+                int duration = Integer.parseInt(row[5]);
+                int lvlModifier = Integer.parseInt(row[6]);
+
+                LevelSpellCard newLevelCard = new LevelSpellCard(id, name, desc, imagePath, mana, lvlModifier);
+                levelSpellCards.add(newLevelCard);
             }
         }
     }

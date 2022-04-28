@@ -39,12 +39,10 @@ public class AetherWars extends Application {
 
     try {
       CardList.load();
-      System.out.println(CardList.getById(2).getName());
-      System.out.println("plist");
+      System.out.println(CardList.getById(401).getName());
       text.setText("Minecraft: Aether Wars!");
     } catch (Exception e) {
       text.setText("Failed to load cards: " + e);
-      System.out.println("apollo");
     }
 
     Group root = new Group();
@@ -55,14 +53,6 @@ public class AetherWars extends Application {
     Player player2 = new Player(2, "Jack");
 
     GameState.setInitialGameState();
-
-
-    try {
-      CardList.load();
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/game.fxml"));
     fxmlLoader.setControllerFactory(c -> new GameController(player1, player2));
