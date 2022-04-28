@@ -10,7 +10,7 @@ import java.util.List;
 public class Player {
     private final int id;
     private final String name;
-    private int hp;
+    private double hp;
     private int mana;
     private List<Card> hand;
     private Deck playerDeck;
@@ -37,7 +37,7 @@ public class Player {
         return this.name;
     }
 
-    public int getHp() {
+    public double getHp() {
         return this.hp;
     }
 
@@ -53,8 +53,8 @@ public class Player {
         return this.playerDeck;
     }
 
-    public void reduceHp(int value) {
-        this.hp -= value;
+    public void reduceHp(double value) {
+        this.hp = Math.max(this.hp - value, 0);
     }
 
     public void resetMana() {

@@ -19,13 +19,17 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class GameController implements Initializable, Publisher, Subscriber {
@@ -33,6 +37,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
     @FXML private Label player2NameLabel;
     @FXML private Label player1LifeLabel;
     @FXML private Label player2LifeLabel;
+    @FXML private ProgressBar player1ProgressBar;
+    @FXML private ProgressBar player2ProgressBar;
     @FXML private Label turnLabel;
     @FXML private AnchorPane player1FieldPane;
     @FXML private AnchorPane player2FieldPane;
@@ -141,6 +147,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
             }
         }
         if (event instanceof ClickFieldCardEvent) {
+            System.out.println(this.hasAttackedSlots);
+            System.out.println(this.occupiedSlots);
             ClickFieldCardEvent clickFieldCardEvent = (ClickFieldCardEvent) event;
             CharacterCard card = clickFieldCardEvent.getFieldCardController().getCharacterCard();
             setCardInfo(card, true);
@@ -343,8 +351,29 @@ public class GameController implements Initializable, Publisher, Subscriber {
                 }
             }
         }
-
     }
+
+    @FXML
+    public void onPlayerClick(MouseEvent e) {
+        // Direct attack
+        ImageView playerAvatar = (ImageView) e.getTarget();
+        if (selectedOwnFieldCardController != null && GameState.getCurrentPhase() == Phase.ATTACK) {
+            if (!hasAttackedSlots.contains(selectedOwnFieldCardController.getSlot())
+                    && isOpponentFieldEmpty()
+                    && playerAvatar.getId().equals("player" + getCurrentOpponent().getId() + "Avatar")) {
+                getCurrentOpponent().reduceHp(selectedOwnFieldCardController.getCharacterCard().getAttack());
+                setCurrentHpDisplay();
+
+                this.hasAttackedSlots.add(selectedOwnFieldCardController.getSlot());
+                selectedOwnFieldCardController = null;
+
+                if (getCurrentOpponent().getHp() == 0) {
+                    showWin(getCurrentPlayer());
+                }
+            }
+        }
+    }
+
 
     private void startDrawPhase() {
         hasDrawn = false;
@@ -357,22 +386,27 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
         drawnCardControllers = new ArrayList<>();
 
-        for (Card card : drawnCard) {
-            System.out.println(card.getName());
-            try {
-                FXMLLoader handCardLoader = new FXMLLoader(AetherWars.class.getResource("view/hand-card.fxml"));
-                handCardLoader.setControllerFactory(c -> new HandCardController());
-                StackPane handCard = handCardLoader.load();
-                HandCardController controller = handCardLoader.getController();
-                controller.setCard(card);
-                drawnCardControllers.add(controller);
-                cardSelectionBox.setAlignment(Pos.CENTER);
-                HBox.setMargin(handCard, new Insets(20,80,20,80));
-                cardSelectionBox.getChildren().add(handCard);
+        if (drawnCard.size() != 0) {
+            for (Card card : drawnCard) {
+                System.out.println(card.getName());
+                try {
+                    FXMLLoader handCardLoader = new FXMLLoader(AetherWars.class.getResource("view/hand-card.fxml"));
+                    handCardLoader.setControllerFactory(c -> new HandCardController());
+                    StackPane handCard = handCardLoader.load();
+                    HandCardController controller = handCardLoader.getController();
+                    controller.setCard(card);
+                    drawnCardControllers.add(controller);
+                    cardSelectionBox.setAlignment(Pos.CENTER);
+                    HBox.setMargin(handCard, new Insets(20,80,20,80));
+                    cardSelectionBox.getChildren().add(handCard);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
             }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+        }
+        else {
+            showWin(getCurrentOpponent());
         }
     }
 
@@ -395,6 +429,14 @@ public class GameController implements Initializable, Publisher, Subscriber {
         publish(new ChangeTurnEvent());
 
         setHand();
+    }
+
+    private void setCurrentHpDisplay() {
+        player1LifeLabel.setText(decimalFormat().format(player1.getHp()) + " / 80");
+        player1ProgressBar.setProgress(player1.getHp() / 80);
+
+        player2LifeLabel.setText(decimalFormat().format(player2.getHp()) + " / 80");
+        player2ProgressBar.setProgress(player2.getHp() / 80);
     }
 
     private void setCurrentManaBar() {
@@ -469,12 +511,34 @@ public class GameController implements Initializable, Publisher, Subscriber {
         }
     }
 
+    private void showWin(Player player) {
+        cardSelectionBox.getChildren().clear();
+        cardSelectionBox.setVisible(true);
+        handBox.setDisable(true);
+        nextPhaseButton.setDisable(true);
+        trashButton.setDisable(true);
+
+        Label winLabel = new Label(player.getName() + " Win!");
+        winLabel.getStyleClass().add("text");
+        winLabel.setFont(Font.font(56));
+        winLabel.setTextFill(Color.rgb(255,255,255));
+    }
+
     private Player getCurrentPlayer() {
         if (GameState.getCurrentPlayerId() == 1) {
             return player1;
         }
         else {
             return player2;
+        }
+    }
+
+    private Player getCurrentOpponent() {
+        if (GameState.getCurrentPlayerId() == 1) {
+            return player2;
+        }
+        else {
+            return player1;
         }
     }
 
@@ -496,6 +560,20 @@ public class GameController implements Initializable, Publisher, Subscriber {
             l = Arrays.asList("A2", "B2", "C2", "D2", "E2");
         }
         return l.contains(slot);
+    }
+
+    private boolean isOpponentFieldEmpty() {
+        if (GameState.getCurrentPlayerId() == 1) {
+            return Collections.disjoint(Arrays.asList("A2", "B2", "C2", "D2", "E2"), this.occupiedSlots);
+        }
+        else {
+            return Collections.disjoint(Arrays.asList("A1", "B1", "C1", "D1", "E1"), this.occupiedSlots);
+        }
+    }
+
+    private static DecimalFormat decimalFormat() {
+        DecimalFormatSymbols d = new DecimalFormatSymbols(Locale.US);
+        return new DecimalFormat("#.#", d);
     }
 
     @Override

@@ -39,7 +39,7 @@
                                     </Label>
                                     <StackPane alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="200.0">
                                        <children>
-                                          <ProgressBar prefHeight="40.0" prefWidth="570.0" progress="1.0" styleClass="hp-progress-bar" StackPane.alignment="CENTER" />
+                                          <ProgressBar fx:id="player1ProgressBar" prefHeight="40.0" prefWidth="570.0" progress="1.0" styleClass="hp-progress-bar" StackPane.alignment="CENTER" />
                                           <Label fx:id="player1LifeLabel" styleClass="text" text="80 / 80" textFill="WHITE" StackPane.alignment="CENTER">
                                              <font>
                                                 <Font name="Arial Bold" size="18.0" />
@@ -81,7 +81,7 @@
                                     </Label>
                                     <StackPane prefHeight="80.0" prefWidth="200.0">
                                        <children>
-                                          <ProgressBar prefHeight="40.0" prefWidth="570.0" progress="1.0" rotate="180.0" styleClass="hp-progress-bar" StackPane.alignment="CENTER" />
+                                          <ProgressBar fx:id="player2ProgressBar" prefHeight="40.0" prefWidth="570.0" progress="1.0" rotate="180.0" styleClass="hp-progress-bar" StackPane.alignment="CENTER" />
                                           <Label fx:id="player2LifeLabel" styleClass="text" text="80 / 80" textFill="WHITE">
                                              <font>
                                                 <Font name="Arial Bold" size="18.0" />
@@ -104,6 +104,11 @@
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
+                                          <ImageView fx:id="player1Avatar" fitHeight="130.0" fitWidth="130.0" onMouseClicked="#onPlayerClick" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../gameImages/player1-icon.png" />
+                                             </image>
+                                          </ImageView>
                                        </children>
                                     </StackPane>
                                     <StackPane fx:id="a1" layoutX="170.0" layoutY="60.0" onMouseClicked="#onSlotPaneClick" prefHeight="130.0" prefWidth="130.0">
@@ -208,6 +213,11 @@
                                                 <InnerShadow offsetX="2.0" offsetY="2.0" />
                                              </effect>
                                           </Rectangle>
+                                          <ImageView fx:id="player2Avatar" fitHeight="130.0" fitWidth="130.0" onMouseClicked="#onPlayerClick" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../gameImages/player2-icon.png" />
+                                             </image>
+                                          </ImageView>
                                        </children>
                                     </StackPane>
                                  </children>
