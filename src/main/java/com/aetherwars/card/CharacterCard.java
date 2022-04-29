@@ -36,7 +36,7 @@ public class CharacterCard extends Card {
         this.usedSwap = new ArrayList<SwapSpellCard>();
     }
 
-    public String getDesc() {
+    public String getDescription() {
         return this.description;
     }
 
@@ -262,7 +262,7 @@ public class CharacterCard extends Card {
 
     public void cardInfo() {
         System.out.println("Name: " + this.getName());
-        System.out.println("Desc: " + this.getDesc());
+        System.out.println("Desc: " + this.getDescription());
         System.out.println("Attack: " + this.getAttack());
         System.out.println("Health: " + this.getHp());
         System.out.println("Exp: " + this.getExp());
