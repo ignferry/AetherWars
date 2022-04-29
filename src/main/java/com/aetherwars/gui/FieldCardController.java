@@ -136,7 +136,6 @@ public class FieldCardController implements Initializable, Publisher, Subscriber
             }
         }
         if (event instanceof ChangeTurnEvent) {
-            System.out.println("Duration of " + this.slot + " reduced");
             this.characterCard.reduceDuration();
             setCardAttributes(this.characterCard);
         }

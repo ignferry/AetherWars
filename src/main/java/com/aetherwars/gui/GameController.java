@@ -147,8 +147,6 @@ public class GameController implements Initializable, Publisher, Subscriber {
             }
         }
         if (event instanceof ClickFieldCardEvent) {
-            System.out.println(this.hasAttackedSlots);
-            System.out.println(this.occupiedSlots);
             ClickFieldCardEvent clickFieldCardEvent = (ClickFieldCardEvent) event;
             CharacterCard card = clickFieldCardEvent.getFieldCardController().getCharacterCard();
             setCardInfo(card, true);
@@ -242,7 +240,6 @@ public class GameController implements Initializable, Publisher, Subscriber {
     @FXML
     public void onTrashButtonClick() {
         if (GameState.getCurrentPhase() == Phase.PLAN) {
-            System.out.println(selectedHandCardController);
             if (selectedHandCardController != null) {
                 publish(new RemoveHandCardEvent(selectedHandCardController));
                 getCurrentPlayer().getHand().remove(selectedHandCardController.getCard());
@@ -386,9 +383,10 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
         drawnCardControllers = new ArrayList<>();
 
+        numOfCardsLabel.setText(Integer.toString(getCurrentPlayer().getPlayerDeck().getCardTotal()));
+
         if (drawnCard.size() != 0) {
             for (Card card : drawnCard) {
-                System.out.println(card.getName());
                 try {
                     FXMLLoader handCardLoader = new FXMLLoader(AetherWars.class.getResource("view/hand-card.fxml"));
                     handCardLoader.setControllerFactory(c -> new HandCardController());
@@ -433,7 +431,11 @@ public class GameController implements Initializable, Publisher, Subscriber {
 
         publish(new ChangeTurnEvent());
 
+
+
         setHand();
+
+
     }
 
     private void setCurrentHpDisplay() {
