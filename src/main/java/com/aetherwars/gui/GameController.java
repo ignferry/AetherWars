@@ -488,6 +488,7 @@ public class GameController implements Initializable, Publisher, Subscriber {
             handBox.setAlignment(Pos.CENTER);
             HBox.setMargin(handCard, new Insets(5,5,5,5));
             handBox.getChildren().add(handCard);
+            handCardControllers.add(controller);
         }
         catch (Exception e) {
             e.printStackTrace();
