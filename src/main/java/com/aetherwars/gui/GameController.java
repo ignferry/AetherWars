@@ -411,7 +411,12 @@ public class GameController implements Initializable, Publisher, Subscriber {
     }
 
     private void prepareNewTurn() {
-        this.turnLabel.setText(Integer.toString(GameState.getCurrentRound()));
+        if (GameState.getCurrentPlayerId() == 1) {
+            this.turnLabel.setText("< " + GameState.getCurrentRound());
+        }
+        else {
+            this.turnLabel.setText(GameState.getCurrentRound() + " >");
+        }
         getCurrentPlayer().resetMana();
         this.manaProgressBar.setProgress(1);
         this.setManaGrid();

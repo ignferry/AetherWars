@@ -54,12 +54,12 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="110.0" prefWidth="100.0">
                                  <children>
-                                    <Label styleClass="text" text="Turn" textFill="WHITE">
+                                    <Label styleClass="text" text="Round" textFill="WHITE">
                                        <font>
-                                          <Font name="Arial" size="36.0" />
+                                          <Font name="Arial" size="30.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="turnLabel" styleClass="text" text="1" textFill="WHITE">
+                                    <Label fx:id="turnLabel" styleClass="text" text="&lt; 1" textFill="WHITE">
                                        <font>
                                           <Font name="Arial" size="36.0" />
                                        </font>

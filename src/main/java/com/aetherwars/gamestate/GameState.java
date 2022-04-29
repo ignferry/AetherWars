@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameState {
-    private static int round;
+    private static int turn;
     private static int currentPlayerId;
     private static Phase currentPhase;
     private static List<Character> hasAttacked;
 
     public static void setInitialGameState() {
-        round = 1;
+        turn = 1;
         currentPlayerId = 1;
         currentPhase = Phase.DRAW;
         hasAttacked = new ArrayList<>();
     }
 
     public static void changeTurn() {
-        round++;
+        turn++;
         currentPlayerId = (currentPlayerId % 2) + 1;
         currentPhase = Phase.DRAW;
     }
@@ -35,7 +35,7 @@ public class GameState {
     }
 
     public static int getCurrentRound() {
-        return round;
+        return (int) Math.ceil((double) turn / 2);
     }
 
     public static int getCurrentPlayerId() {
