@@ -70,11 +70,10 @@ public class CardList {
 
     public static void loadCharacterCards(File characterCSVFile) throws IOException, URISyntaxException {
         if(characterCards.isEmpty()) {
-            int nCharacterCards = 18;
-            int frekuensi = 4;
             CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
             characterReader.setSkipHeader(true);
             List<String[]> characterRows = characterReader.read();
+            int nCharacterCards = characterRows.size();
             for (String[] row : characterRows) {
                 int id = Integer.parseInt(row[0]);
                 String name = row[1];
@@ -87,6 +86,7 @@ public class CardList {
                 int attackUp = Integer.parseInt(row[8]);
                 int healthUp = Integer.parseInt(row[9]);
 
+                int frekuensi = 4;
                 for (int i = 0; i < frekuensi; i++) {
                     CharacterCard newCharacterCard = new CharacterCard(id+(i*nCharacterCards), name, desc, imagePath, mana, attack, health, attackUp, healthUp,
                             1, 0, type);
@@ -158,11 +158,10 @@ public class CardList {
 
     public static void loadLevelSpellCards(File levelCSVFile) throws IOException, URISyntaxException {
         if(levelSpellCards.isEmpty()) {
-            int nSpellCards = 2;
-            int frekuensi = 8;
             CSVReader characterReader = new CSVReader(levelCSVFile, "\t");
             characterReader.setSkipHeader(true);
             List<String[]> characterRows = characterReader.read();
+            int nSpellCards = characterRows.size();
             for (String[] row : characterRows) {
                 int id = Integer.parseInt(row[0]);
                 String name = row[1];
@@ -171,6 +170,8 @@ public class CardList {
                 int mana = Integer.parseInt(row[4]);
                 double duration = Double.parseDouble(row[5]);
                 int lvlModifier = Integer.parseInt(row[6]);
+
+                int frekuensi = 8;
                 for (int i = 0; i < frekuensi; i++) {
                     LevelSpellCard newLevelCard = new LevelSpellCard(id+(i*nSpellCards), name, desc, imagePath, mana, lvlModifier);
                     levelSpellCards.add(newLevelCard);
