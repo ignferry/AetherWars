@@ -192,6 +192,8 @@ public class GameController implements Initializable, Publisher, Subscriber {
                             getCurrentPlayer().reduceMana(manacost);
                             setCurrentManaBar();
 
+                            getCurrentPlayer().getHand().remove(selectedHandCardController.getCard());
+
                             if (card.isDie()) {
                                 this.occupiedSlots.remove(clickFieldCardEvent.getFieldCardController().getSlot());
                                 publish(new RemoveFromFieldEvent(clickFieldCardEvent.getFieldCardController()));
