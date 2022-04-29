@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterCard extends Card {
+    // public static PotionSpellCard ppp = new PotionSpellCard(0,"","","",0,0,2,2);  --> Untuk Testing di method main
     private double baseAttack;
     private double baseHp;
     private int attackUp;
@@ -199,23 +200,74 @@ public class CharacterCard extends Card {
         }
     }
 
+    public double[] pureHpAttack() {
+        double pureAtk = this.getAttack();
+        double pureHp = this.getHp();
+        boolean swapped = this.getSwap();
+        if (this.usedSwap.size() != 0) {
+            pureAtk = this.getHp();
+            pureHp = this.getAttack();
+            swapped = !this.getSwap();
+//            System.out.println("Diswap");
+        }
+        for (PotionSpellCard ps : this.usedPotion) {
+            // 1.Pemakaian potion tidak dipengaruhi wrap
+            if ((!swapped && !ps.getApplyOnSwap()) || (swapped && ps.getApplyOnSwap())) {
+                pureAtk -= ps.getAttackChangeValue();
+                pureHp -= ps.getHpChangeValue();
+            }
+                // 2.Pemakaian potion dipengaruhi wrap
+            else if ((swapped && !ps.getApplyOnSwap()) || (!swapped && ps.getApplyOnSwap())) {
+                pureAtk -= ps.getHpChangeValue();
+                pureHp -= ps.getAttackChangeValue();
+            }
+//            System.out.println("AtcChange: " + ps.getAttackChangeValue());
+//            System.out.println("HpChange: " + ps.getHpChangeValue());
+        }
+        double[] ret = {pureHp, pureAtk};
+        return ret;
+    }
+
+    public void restoreHp() {
+        // new currentHp = additionalHp  current baseHp  -> additional dari potionSpell
+        double additionalHp = this.currentHp - this.pureHpAttack()[0];
+//        System.out.println("Efek potion:" + additionalHp);
+        this.currentHp = additionalHp + this.baseHp;
+    }
+
     public void levelUp() {
         if (this.level < 10) {
-            this.baseAttack += this.attackUp;
-            this.baseHp += this.healthUp;
+            // Naikin Attack
             this.currentAttack += this.attackUp;
+            this.baseAttack += this.attackUp;
+            // Restore Hp -> Naikin Hp
+            this.restoreHp();
             this.currentHp += this.healthUp;
+            this.baseHp += this.healthUp;
+            // Exp Requirement -> Dibebaskan
             this.exp -= (this.level * 2 - 1);
             this.level++;
+        }
+        else if (this.level == 10) {
+            this.restoreHp();
         }
     }
 
     public void levelDown() {
         if (this.level > 1) {
-            this.baseAttack = Math.max(0, this.baseAttack - this.attackUp);
-            this.baseHp = Math.max(0, this.baseHp - this.healthUp);
-            this.currentHp = Math.min(this.currentHp, this.baseHp);
-            this.currentAttack = Math.min(this.currentAttack, this.baseAttack);
+            // Cari pure attribute, bisa jadi sama dengan baseAtribut lama atau lebih kecil
+            double[] pureAttribute = this.pureHpAttack();
+            // Ubah attack
+            double additionalAttack = this.currentAttack - pureAttribute[1];
+            this.baseAttack -= this.attackUp;
+            this.currentAttack = Math.min(this.baseAttack, pureAttribute[1]);
+            this.currentAttack += additionalAttack;
+            // Ubah Hp
+            double additionalHp = this.currentHp - pureAttribute[0];
+            this.baseHp -= this.healthUp;
+            this.currentHp = Math.min(this.baseHp, pureAttribute[0]);
+            this.currentHp += additionalHp;
+
             this.exp = 0;
             this.level--;
         }
@@ -268,4 +320,36 @@ public class CharacterCard extends Card {
         System.out.println("Exp: " + this.getExp());
         System.out.println("Level: " + this.getLevel());
     }
+
+//    public static void main(String[] args) {
+//        CharacterCard c1 = new CharacterCard(1,"C1", "Kartu1", "no image", 1,
+//                10, 10,4,4,1, 0, CharacterType.NETHER);
+//        c1.cardInfo();
+//        System.out.println("____________1____________");
+//        System.out.println();
+//        CharacterCard c2 = (CharacterCard) c1.clone();
+//        c2.cardInfo();
+//        System.out.println("____________2____________");
+//        System.out.println();
+//        c2.currentHp = 2;
+//        c2.cardInfo();
+//        System.out.println("____________3____________");
+//        System.out.println();
+//        ppp.useSpell(c2);
+//        c2.level= 9;
+//        c2.cardInfo();
+//        System.out.println("____________4____________");
+//        System.out.println();
+//        c2.levelUp();
+//        c2.cardInfo();
+//        System.out.println("____________5____________");
+//        System.out.println();
+//        ppp.cancelSpell(c2);
+//        c2.usedPotion.remove(ppp);
+//        c2.cardInfo();
+//        System.out.println("____________6____________");
+//        System.out.println();
+//        c2.levelDown();
+//        c2.cardInfo();
+//    }
 }
