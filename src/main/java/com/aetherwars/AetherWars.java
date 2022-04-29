@@ -23,10 +23,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import com.aetherwars.model.Type;
-import com.aetherwars.model.Character;
-import com.aetherwars.util.CSVReader;
-
 public class AetherWars extends Application {
 
   @Override
@@ -39,7 +35,6 @@ public class AetherWars extends Application {
 
     try {
       CardList.load();
-      System.out.println(CardList.getById(401).getName());
       text.setText("Minecraft: Aether Wars!");
     } catch (Exception e) {
       text.setText("Failed to load cards: " + e);
